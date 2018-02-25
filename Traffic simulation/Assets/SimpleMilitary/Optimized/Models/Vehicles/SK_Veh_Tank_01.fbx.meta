@@ -1,0 +1,96 @@
+fileFormatVersion: 2
+guid: f04fe4c214ca77a40803cb373d0f0f68
+timeCreated: 1495160038
+licenseType: Store
+ModelImporter:
+  serializedVersion: 18
+  fileIDToRecycleName:
+    100000: //RootNode
+    100002: SK_Veh_Tank_01_Barrel_01
+    100004: SK_Veh_Tank_01_Lid_01
+    100006: SK_Veh_Tank_01_Lid_02
+    100008: SK_Veh_Tank_01_MgGun_01
+    100010: SK_Veh_Tank_01_Turret_01
+    400000: //RootNode
+    400002: SK_Veh_Tank_01_Barrel_01
+    400004: SK_Veh_Tank_01_Lid_01
+    400006: SK_Veh_Tank_01_Lid_02
+    400008: SK_Veh_Tank_01_MgGun_01
+    400010: SK_Veh_Tank_01_Turret_01
+    2300000: //RootNode
+    2300002: SK_Veh_Tank_01_Barrel_01
+    2300004: SK_Veh_Tank_01_Lid_01
+    2300006: SK_Veh_Tank_01_Lid_02
+    2300008: SK_Veh_Tank_01_MgGun_01
+    2300010: SK_Veh_Tank_01_Turret_01
+    3300000: //RootNode
+    3300002: SK_Veh_Tank_01_Barrel_01
+    3300004: SK_Veh_Tank_01_Lid_01
+    3300006: SK_Veh_Tank_01_Lid_02
+    3300008: SK_Veh_Tank_01_MgGun_01
+    3300010: SK_Veh_Tank_01_Turret_01
+    4300000: SK_Veh_Tank_01
+    4300002: SK_Veh_Tank_01_Turret_01
+    4300004: SK_Veh_Tank_01_Barrel_01
+    4300006: SK_Veh_Tank_01_Lid_01
+    4300008: SK_Veh_Tank_01_Lid_02
+    4300010: SK_Veh_Tank_01_MgGun_01
+    9500000: //RootNode
+  materials:
+    importMaterials: 0
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationCompression: 1
+    animationRotationError: .5
+    animationPositionError: .5
+    animationScaleError: .5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 0
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 0
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 5
+    splitTangentsAcrossUV: 0
+    normalImportMode: 1
+    tangentImportMode: 1
+  importAnimation: 0
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: .5
+    foreArmTwist: .5
+    upperLegTwist: .5
+    legTwist: .5
+    armStretch: .0500000007
+    legStretch: .0500000007
+    feetSpacing: 0
+    rootMotionBoneName: 
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 0
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
