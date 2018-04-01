@@ -87,7 +87,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\CrossRoadHelper.cs" />
     <Compile Include="Assets\DirectionController.cs" />
+    <Compile Include="Assets\GlobalPathController.cs" />
     <Compile Include="Assets\iTweenExamples\Flythrough\Scripts\FlythroughCameraController.cs" />
     <Compile Include="Assets\iTweenExamples\Flythrough\Scripts\LookPoint.cs" />
     <Compile Include="Assets\iTweenExamples\Flythrough\Scripts\LookTarget.cs" />

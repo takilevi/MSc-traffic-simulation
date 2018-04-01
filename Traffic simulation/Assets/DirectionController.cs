@@ -14,7 +14,8 @@ public class DirectionController : MonoBehaviour {
   public enum TrafficLight {Red,Yellow,Green};
   public TrafficLight mainRoadLight = TrafficLight.Red;
   private TrafficLight activeLight;
-  public bool buttonActivated;
+  public bool buttonActivated = false;
+  private bool previousCheck;
 
   void Start()
   {
@@ -22,11 +23,24 @@ public class DirectionController : MonoBehaviour {
     directionList.Add(forwardDirectionPath);
     directionList.Add(leftDirectionPath);
     activeLight = mainRoadLight;
+
+    previousCheck = buttonActivated;
+
     GetStarted("init");
   }
 
   void Update()
   {
+    if (buttonActivated)
+    {
+      iTween.Pause(gameObject, true);
+      previousCheck = buttonActivated;
+    }
+    if (previousCheck!=buttonActivated)
+    {
+      iTween.Resume(gameObject, true);
+    }
+
     if(activeLight != mainRoadLight)
     {
       mainRoadTrafficLight.GetComponent<TrafficLightController>().SwitchTo(mainRoadLight);
@@ -36,19 +50,15 @@ public class DirectionController : MonoBehaviour {
 
   void OnGUI()
   {
-    if (buttonActivated)
-    {
-      reset();
-      GetStarted("init");
-    }
+    
   }
 
   void OnDrawGizmos()
   {
-    iTween.DrawPath(path);
-    iTween.DrawPath(rightDirectionPath);
-    iTween.DrawPath(forwardDirectionPath);
-    iTween.DrawPath(leftDirectionPath);
+    //iTween.DrawPath(path);
+    //iTween.DrawPath(rightDirectionPath);
+    //iTween.DrawPath(forwardDirectionPath);
+    //iTween.DrawPath(leftDirectionPath);
   }
 
   void GetStarted(string direction)
@@ -58,7 +68,7 @@ public class DirectionController : MonoBehaviour {
       case "init":
       iTween.MoveTo(gameObject,
       iTween.Hash("path", path, "time", 10, "orienttopath", true,
-      "looktime", .6, "easetype", "easeInOutSine", "onComplete", "ChooseDirection"));
+      "looktime", .6, "easetype", iTween.EaseType.linear , "onComplete", "ChooseDirection"));
         break;
 
         /*iTween.MoveTo(gameObject,
@@ -71,7 +81,11 @@ public class DirectionController : MonoBehaviour {
 
   void ChooseDirection()
   {
-    StartCoroutine(AlwaysWaitAtStopSign(Random.Range(0,directionList.Count)));
+    iTween.MoveTo(gameObject,
+      iTween.Hash("path", forwardDirectionPath, "time", 5, "orienttopath", true,
+      "looktime", .6, "easetype", iTween.EaseType.linear));
+
+    //StartCoroutine(AlwaysWaitAtStopSign(Random.Range(0,directionList.Count)));
 
     //TODO: chose from the available paths
   }
@@ -96,13 +110,6 @@ public class DirectionController : MonoBehaviour {
   void PathSelection()
   {
     //early predicted method
-  }
-
-  void reset()
-  {
-    buttonActivated = false;
-    transform.position = new Vector3(0, 0, 0);
-    transform.eulerAngles = new Vector3(0, 0, 0);
   }
 
 

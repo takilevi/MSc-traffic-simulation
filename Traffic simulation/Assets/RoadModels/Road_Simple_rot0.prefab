@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 114594021362972284}
   m_Layer: 0
   m_Name: Road_Simple_rot0
-  m_TagString: Untagged
+  m_TagString: RoadElement
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
