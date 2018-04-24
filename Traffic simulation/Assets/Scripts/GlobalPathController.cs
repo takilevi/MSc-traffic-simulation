@@ -282,11 +282,11 @@ public class GlobalPathController : MonoBehaviour
   {
     if (alternativePaths.Count == 0)
     {
-      Debug.Log("OnDraw függvény, nincs nyomvonal");
+      //Debug.Log("OnDraw függvény, nincs nyomvonal");
       //LogDraw();
     }
 
-    Debug.Log("OnDrawGizmos-ban töltöttük: " + alternativePaths.Count);
+    //Debug.Log("OnDrawGizmos-ban töltöttük: " + alternativePaths.Count);
     for (int i = 0; i < alternativePaths.Count; i++)
     {
       iTween.DrawPath(alternativePaths[i], alternativePathsColorEnum[i]);

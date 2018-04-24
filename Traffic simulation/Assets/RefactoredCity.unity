@@ -389,6 +389,7 @@ GameObject:
   - component: {fileID: 34441080}
   - component: {fileID: 34441079}
   - component: {fileID: 34441078}
+  - component: {fileID: 34441083}
   m_Layer: 0
   m_Name: Camera
   m_TagString: Untagged
@@ -466,6 +467,29 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 90, y: 180, z: 0}
+--- !u!114 &34441083
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 34441077}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a7ea9cd89755f245a69dfb50be2aff8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  test:
+  - {fileID: 2002461530}
+  - {fileID: 995988661}
+  - {fileID: 978254329}
+  - {fileID: 385531012}
+  - {fileID: 1483158414}
+  testV3:
+  - {x: -2.5, y: 0, z: 57.5}
+  - {x: -2.5, y: 0, z: 62.5}
+  - {x: -2.5, y: 0, z: 67.5}
+  - {x: -7.5, y: 0, z: 67.5}
+  - {x: -12.5, y: 0, z: 67.5}
 --- !u!4 &42147195 stripped
 Transform:
   m_PrefabParentObject: {fileID: 4081020112102070, guid: 2d37f33cecbda3949a5491740670cc38,
@@ -12042,8 +12066,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Children: []
-  forwardAvailable: 0
-  rightAvailable: 0
+  forwardAvailable: 1
+  rightAvailable: 1
   leftAvailable: 1
 --- !u!1001 &1404635174
 Prefab:
@@ -15885,7 +15909,7 @@ Prefab:
       objectReference: {fileID: 726149321}
     - target: {fileID: 141870, guid: edf6cb56e12fba648b2cf1e7dfa5bf88, type: 2}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 114991684204236074, guid: edf6cb56e12fba648b2cf1e7dfa5bf88, type: 2}

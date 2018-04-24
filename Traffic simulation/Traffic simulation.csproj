@@ -87,9 +87,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\CrossRoadHelper.cs" />
-    <Compile Include="Assets\DirectionController.cs" />
-    <Compile Include="Assets\GlobalPathController.cs" />
     <Compile Include="Assets\iTweenExamples\Flythrough\Scripts\FlythroughCameraController.cs" />
     <Compile Include="Assets\iTweenExamples\Flythrough\Scripts\LookPoint.cs" />
     <Compile Include="Assets\iTweenExamples\Flythrough\Scripts\LookTarget.cs" />
@@ -97,7 +94,6 @@
     <Compile Include="Assets\iTweenExamples\GridMovement\Scripts\GameBoardCSharp.cs" />
     <Compile Include="Assets\iTweenExamples\GridMovement\Scripts\GamePieceCSharp.cs" />
     <Compile Include="Assets\iTweenExamples\PathControlledCharacter\Scripts\Controller.cs" />
-    <Compile Include="Assets\iTweenExamples\PathControlledCharacter\Scripts\PathPoint.cs" />
     <Compile Include="Assets\iTweenExamples\PathExample\Scripts\PathCameraController.cs" />
     <Compile Include="Assets\iTweenExamples\PathExample\Scripts\PathExample.cs" />
     <Compile Include="Assets\iTweenExamples\PutOnPathExample\Scripts\Gizmo.cs" />
@@ -112,8 +108,13 @@
     <Compile Include="Assets\iTweenExamples\WorkingWithPhysics\Scripts\Bat.cs" />
     <Compile Include="Assets\iTweenExamples\WorkingWithPhysics\Scripts\Brick.cs" />
     <Compile Include="Assets\iTweenExamples\WorkingWithPhysics\Scripts\SimpleCameraFade.cs" />
-    <Compile Include="Assets\PointHandlerScript.cs" />
-    <Compile Include="Assets\TrafficLightController.cs" />
+    <Compile Include="Assets\Scripts\CrossRoadHelper.cs" />
+    <Compile Include="Assets\Scripts\DirectionController.cs" />
+    <Compile Include="Assets\Scripts\GlobalPathController.cs" />
+    <Compile Include="Assets\Scripts\PathPoint.cs" />
+    <Compile Include="Assets\Scripts\PointHandlerScript.cs" />
+    <Compile Include="Assets\Scripts\TrafficLightController.cs" />
+    <Compile Include="Assets\Scripts\TweenHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Plugins\Pixelplacement\iTween\ReadMe!\ReadMe!.txt" />
