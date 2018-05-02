@@ -7,16 +7,13 @@ public class TweenHelper : MonoBehaviour
 {
   public Transform[] test;
   public Vector3[] testV3;
+  private Vector3[] pathPointsCatMull;
   public Color mainPathColor;
 
-  public float speed = 100.0F;
-
-  private Transform startMarker;
-  private Transform endMarker;
-  private float journeyLength;
+  public float speed = 250.0F;
   private GameObject targetObject;
   private int pathIndex = 1;
-  private float reachDist = 2f;
+  private float reachDist = 1f;
   private bool moving;
 
   // Use this for initialization
@@ -25,9 +22,8 @@ public class TweenHelper : MonoBehaviour
     targetObject = this.gameObject;
     targetObject.transform.position = test[0].position;
 
-    startMarker = test[0];
-    endMarker = test[test.Length - 1];
-
+    pathPointsCatMull = GetInterpolatedPath(testV3).ToArray();
+    //Debug.Log("hossz: " + pathPointsCatMull.Length);
     moving = true;
   }
 
@@ -36,13 +32,14 @@ public class TweenHelper : MonoBehaviour
   {
     if (moving)
     {
-      float dist = Vector3.Distance(test[pathIndex].position,transform.position);
-      transform.position = Vector3.Lerp(transform.position, test[pathIndex].position, Time.deltaTime*speed);
-
+      float dist = Vector3.Distance(pathPointsCatMull[pathIndex],transform.position);
+      Debug.Log("speed: " + speed);
+      transform.position = Vector3.Lerp(transform.position, pathPointsCatMull[pathIndex], Time.deltaTime*10*speed);
+      transform.LookAt(pathPointsCatMull[pathIndex]);
       if (dist <= reachDist)
       { pathIndex++; }
 
-      if (pathIndex >= test.Length)
+      if (pathIndex >= pathPointsCatMull.Length)
       {
         moving = false;
       }
@@ -77,9 +74,28 @@ public class TweenHelper : MonoBehaviour
       float pm = (float)i / SmoothAmount;
       Vector3 currPt = Interp(vector3s, pm);
       Gizmos.DrawLine(currPt, previousPoint);
-
       previousPoint = currPt;
     }
+  }
+
+  private List<Vector3> GetInterpolatedPath(Vector3[] path)
+  {
+    Vector3[] vector3s = PathControlPointGenerator(PathSmoothingAtCurvePoint(path));
+
+    List<Vector3> pathPointsCatmull = new List<Vector3>();
+
+    Vector3 previousPoint = Interp(vector3s, 0);
+    int SmoothAmount = path.Length * 15;
+    for (int i = 1; i <= SmoothAmount; i++)
+    {
+      float pm = (float)i / SmoothAmount;
+      Vector3 currPt = Interp(vector3s, pm);
+
+      pathPointsCatmull.Add(previousPoint);
+      previousPoint = currPt;
+    }
+
+    return pathPointsCatmull;
   }
 
   private static Vector3[] PathSmoothingAtCurvePoint(Vector3[] path)

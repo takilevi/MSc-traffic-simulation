@@ -3209,7 +3209,7 @@ MonoBehaviour:
   - {x: -7.5, y: 0, z: 47.5}
   - {x: -7.5, y: 0, z: 42.5}
   mainPathColor: {r: 0, g: 1, b: 0, a: 1}
-  speed: 1
+  speed: 1.2
 --- !u!1001 &323042043
 Prefab:
   m_ObjectHideFlags: 0
@@ -7533,26 +7533,6 @@ Prefab:
 GameObject:
   m_PrefabParentObject: {fileID: 164098, guid: 416c46ca128db5f4bb76f235b4f991d5, type: 2}
   m_PrefabInternal: {fileID: 873452734}
---- !u!114 &873452736
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 873452735}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d4688bf848f585949b8b9df5e5bc9234, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  allTransform: []
-  allRoadGameObject: []
-  allCrossRoadGameObject: []
-  car: {fileID: 873452735}
-  onePath: []
-  alternativePathsColorEnum:
-  - {r: 1, g: 0, b: 0, a: 1}
-  - {r: 0, g: 0, b: 1, a: 1}
-  - {r: 0, g: 1, b: 0, a: 1}
 --- !u!114 &873452737
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7617,7 +7597,7 @@ MonoBehaviour:
   - {x: -72.5, y: 0, z: 72.5}
   - {x: -72.5, y: 0, z: 77.60001}
   mainPathColor: {r: 1, g: 0, b: 0, a: 1}
-  speed: 1
+  speed: 0.5
 --- !u!4 &873452739 stripped
 Transform:
   m_PrefabParentObject: {fileID: 463928, guid: 416c46ca128db5f4bb76f235b4f991d5, type: 2}
