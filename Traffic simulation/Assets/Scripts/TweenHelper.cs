@@ -7,16 +7,46 @@ public class TweenHelper : MonoBehaviour
 {
   public Transform[] test;
   public Vector3[] testV3;
+  public Color mainPathColor;
+
+  public float speed = 100.0F;
+
+  private Transform startMarker;
+  private Transform endMarker;
+  private float journeyLength;
+  private GameObject targetObject;
+  private int pathIndex = 1;
+  private float reachDist = 2f;
+  private bool moving;
+
   // Use this for initialization
   void Start()
   {
+    targetObject = this.gameObject;
+    targetObject.transform.position = test[0].position;
 
+    startMarker = test[0];
+    endMarker = test[test.Length - 1];
+
+    moving = true;
   }
 
   // Update is called once per frame
   void Update()
   {
+    if (moving)
+    {
+      float dist = Vector3.Distance(test[pathIndex].position,transform.position);
+      transform.position = Vector3.Lerp(transform.position, test[pathIndex].position, Time.deltaTime*speed);
 
+      if (dist <= reachDist)
+      { pathIndex++; }
+
+      if (pathIndex >= test.Length)
+      {
+        moving = false;
+      }
+    }
   }
   private void OnDrawGizmos()
   {
@@ -26,22 +56,22 @@ public class TweenHelper : MonoBehaviour
       suppliedLine[i] = test[i].position;
     }
     testV3 = suppliedLine;
-    DrawForwardPath(testV3, Color.red);
+    DrawForwardPath(testV3, mainPathColor);
   }
 
   private static void DrawForwardPath(Vector3[] path, Color color)
   {
-    Vector3[] vector3s = PathSmoothingAtCurvePoint(PathControlPointGenerator(path));
+    Vector3[] vector3s = PathControlPointGenerator(PathSmoothingAtCurvePoint(path));
 
-    foreach (var item in vector3s)
+    /*foreach (var item in vector3s)
     {
       Debug.Log(item);
-    }
+    }*/
 
     //Line Draw:
     Vector3 previousPoint = Interp(vector3s, 0);
     Gizmos.color = color;
-    int SmoothAmount = path.Length * 100;
+    int SmoothAmount = path.Length * 8;
     for (int i = 1; i <= SmoothAmount; i++)
     {
       float pm = (float)i / SmoothAmount;
@@ -68,11 +98,16 @@ public class TweenHelper : MonoBehaviour
       Vector3 targetSecond = (middle - last).normalized;
 
       float angle = Vector3.Angle(targetFirst, targetSecond);
-      Debug.Log(i + "\t " + angle);
+      //Debug.Log(i + "\t " + angle);
 
       if(angle==90f)
       {
-        //na most kell a Bezier. Ide jön a first és a last közötti optimális kanyar
+        //Ide jön a first és a last közötti optimális kanyar
+        Vector3 midpoint = (first + last) / 2;
+        //Debug.Log("midpoint :" + midpoint);
+
+        path[i + 1] =(middle + midpoint) / 2;
+        //Debug.Log("middle modified: " + path[i + 1]);
       }
 
 

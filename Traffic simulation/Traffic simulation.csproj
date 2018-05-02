@@ -108,6 +108,7 @@
     <Compile Include="Assets\iTweenExamples\WorkingWithPhysics\Scripts\Bat.cs" />
     <Compile Include="Assets\iTweenExamples\WorkingWithPhysics\Scripts\Brick.cs" />
     <Compile Include="Assets\iTweenExamples\WorkingWithPhysics\Scripts\SimpleCameraFade.cs" />
+    <Compile Include="Assets\Scripts\CarMover.cs" />
     <Compile Include="Assets\Scripts\CrossRoadHelper.cs" />
     <Compile Include="Assets\Scripts\DirectionController.cs" />
     <Compile Include="Assets\Scripts\GlobalPathController.cs" />
