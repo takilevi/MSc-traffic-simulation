@@ -20,6 +20,7 @@ public class PointHandlerScript : MonoBehaviour {
   {
     foreach (var item in points)
     {
+      //Debug.Log("item helyzete: " + item.transform.position);
       item.AddComponent<PathPoint>();
     }
   }

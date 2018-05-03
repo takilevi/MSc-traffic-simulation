@@ -115,6 +115,7 @@
     <Compile Include="Assets\Scripts\PathPoint.cs" />
     <Compile Include="Assets\Scripts\PointHandlerScript.cs" />
     <Compile Include="Assets\Scripts\TrafficLightController.cs" />
+    <Compile Include="Assets\Scripts\TransformModifier.cs" />
     <Compile Include="Assets\Scripts\TweenHelper.cs" />
   </ItemGroup>
   <ItemGroup>
