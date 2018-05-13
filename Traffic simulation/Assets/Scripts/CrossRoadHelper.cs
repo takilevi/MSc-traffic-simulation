@@ -10,15 +10,15 @@ public class CrossRoadHelper : MonoBehaviour
   public bool forwardAvailable;
   public bool rightAvailable;
   public bool leftAvailable;
+  public GameObject inObj;
+  public Vector3 direction;
 
 
   void Start()
   {
-
-
     foreach (Transform child in transform)
     {
-      if (child.tag == "RoadElement")
+      if (child.tag == "CrossRoad")
       {
         Children.Add(child.gameObject);
       }

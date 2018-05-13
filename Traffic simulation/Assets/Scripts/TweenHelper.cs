@@ -116,7 +116,7 @@ public class TweenHelper : MonoBehaviour
       float angle = Vector3.Angle(targetFirst, targetSecond);
       //Debug.Log(i + "\t " + angle);
 
-      if(angle==90f)
+      if(angle>80f)
       {
         //Ide jön a first és a last közötti optimális kanyar
         Vector3 midpoint = (first + last) / 2;
