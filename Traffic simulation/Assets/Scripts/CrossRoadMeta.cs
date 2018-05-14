@@ -101,11 +101,11 @@ public class CrossRoadMeta : MonoBehaviour
 
   GameObject[] GetDirectionObjects(GameObject from, GameObject exit, Vector3 forwardVector)
   {
-    Debug.Log("forward: " + forwardVector);
+    /*Debug.Log("forward: " + forwardVector);
     float angleRight = Vector3.SignedAngle(forwardVector, (GameObject.Find("SM_Env_Road_Crossing_11").GetComponent<TransformModifier>().Position - from.GetComponent<TransformModifier>().Position).normalized, Vector3.up);
     float angleForward = Vector3.SignedAngle(forwardVector, (GameObject.Find("SM_Env_Road_Crossing_13").GetComponent<TransformModifier>().Position - from.GetComponent<TransformModifier>().Position).normalized, Vector3.up);
     float angleLeft = Vector3.SignedAngle(forwardVector, (GameObject.Find("SM_Env_Road_Crossing_32").GetComponent<TransformModifier>().Position - from.GetComponent<TransformModifier>().Position).normalized, Vector3.up);
-
+    */
     float angleExit = Vector3.SignedAngle(forwardVector, (exit.GetComponent<TransformModifier>().Position - from.GetComponent<TransformModifier>().Position).normalized, Vector3.up);
     Debug.Log("kanyarodási szög: " + angleExit);
     GameObject[] theArray;

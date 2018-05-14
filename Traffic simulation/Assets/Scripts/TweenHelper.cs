@@ -5,7 +5,7 @@ using System;
 
 public class TweenHelper : MonoBehaviour
 {
-  public Transform[] test;
+  public GameObject[] test;
   public Vector3[] testV3;
   private Vector3[] pathPointsCatMull;
   public Color mainPathColor;
@@ -20,22 +20,31 @@ public class TweenHelper : MonoBehaviour
   void Start()
   {
     targetObject = this.gameObject;
-    targetObject.transform.position = test[0].position;
 
-    pathPointsCatMull = GetInterpolatedPath(testV3).ToArray();
-    //Debug.Log("hossz: " + pathPointsCatMull.Length);
-    moving = true;
+    if (test.Length > 0)
+    {
+
+      // targetObject.transform.position = test[0].position;
+      targetObject.transform.position = test[0].GetComponent<TransformModifier>().Position;
+
+      pathPointsCatMull = GetInterpolatedPath(testV3).ToArray();
+      //Debug.Log("hossz: " + pathPointsCatMull.Length);
+      moving = true;
+    }
   }
 
   // Update is called once per frame
   void Update()
   {
-    if (moving)
+    if (moving && pathPointsCatMull.Length > 0)
     {
       float dist = Vector3.Distance(pathPointsCatMull[pathIndex],transform.position);
-      Debug.Log("speed: " + speed);
+      Debug.Log("catmull count: " + pathPointsCatMull.Length);
+
+      this.transform.LookAt(pathPointsCatMull[pathIndex]);
+
       transform.position = Vector3.Lerp(transform.position, pathPointsCatMull[pathIndex], Time.deltaTime*10*speed);
-      transform.LookAt(pathPointsCatMull[pathIndex]);
+
       if (dist <= reachDist)
       { pathIndex++; }
 
@@ -44,16 +53,20 @@ public class TweenHelper : MonoBehaviour
         moving = false;
       }
     }
+    else if(pathPointsCatMull.Length <= 0) { Start(); }
   }
   private void OnDrawGizmos()
   {
-    Vector3[] suppliedLine = new Vector3[test.Length];
-    for (int i = 0; i < test.Length; i++)
+    if(test.Length > 0)
     {
-      suppliedLine[i] = test[i].position;
+      Vector3[] suppliedLine = new Vector3[test.Length];
+      for (int i = 0; i < test.Length; i++)
+      {
+        suppliedLine[i] = test[i].GetComponent<TransformModifier>().Position;
+      }
+      testV3 = suppliedLine;
+      DrawForwardPath(testV3, mainPathColor);
     }
-    testV3 = suppliedLine;
-    DrawForwardPath(testV3, mainPathColor);
   }
 
   private static void DrawForwardPath(Vector3[] path, Color color)
@@ -68,7 +81,7 @@ public class TweenHelper : MonoBehaviour
     //Line Draw:
     Vector3 previousPoint = Interp(vector3s, 0);
     Gizmos.color = color;
-    int SmoothAmount = path.Length * 8;
+    int SmoothAmount = path.Length * 7;
     for (int i = 1; i <= SmoothAmount; i++)
     {
       float pm = (float)i / SmoothAmount;
@@ -80,6 +93,7 @@ public class TweenHelper : MonoBehaviour
 
   private List<Vector3> GetInterpolatedPath(Vector3[] path)
   {
+    if (path.Length <= 0) return new List<Vector3>();
     Vector3[] vector3s = PathControlPointGenerator(PathSmoothingAtCurvePoint(path));
 
     List<Vector3> pathPointsCatmull = new List<Vector3>();

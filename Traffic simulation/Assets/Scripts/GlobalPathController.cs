@@ -15,7 +15,6 @@ public class GlobalPathController : MonoBehaviour
   private int selectedWay;
 
   private bool firstLoad = true;
-  private bool firstLoadGizmos = true;
 
   // Use this for initialization
   void Start()
