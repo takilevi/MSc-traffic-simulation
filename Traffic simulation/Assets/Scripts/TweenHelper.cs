@@ -38,12 +38,12 @@ public class TweenHelper : MonoBehaviour
   {
     if (moving && pathPointsCatMull.Length > 0)
     {
-      float dist = Vector3.Distance(pathPointsCatMull[pathIndex],transform.position);
+      float dist = Vector3.Distance(pathPointsCatMull[pathIndex], transform.position);
       Debug.Log("catmull count: " + pathPointsCatMull.Length);
 
       this.transform.LookAt(pathPointsCatMull[pathIndex]);
 
-      transform.position = Vector3.Lerp(transform.position, pathPointsCatMull[pathIndex], Time.deltaTime*10*speed);
+      transform.position = Vector3.Lerp(transform.position, pathPointsCatMull[pathIndex], Time.deltaTime * 10 * speed);
 
       if (dist <= reachDist)
       { pathIndex++; }
@@ -53,11 +53,11 @@ public class TweenHelper : MonoBehaviour
         moving = false;
       }
     }
-    else if(pathPointsCatMull.Length <= 0) { Start(); }
+    else if (pathPointsCatMull == null || pathPointsCatMull.Length <= 0) { Start(); }
   }
   private void OnDrawGizmos()
   {
-    if(test.Length > 0)
+    if (test.Length > 0)
     {
       Vector3[] suppliedLine = new Vector3[test.Length];
       for (int i = 0; i < test.Length; i++)
@@ -93,7 +93,7 @@ public class TweenHelper : MonoBehaviour
 
   private List<Vector3> GetInterpolatedPath(Vector3[] path)
   {
-    if (path.Length <= 0) return new List<Vector3>();
+    if (path == null || path.Length <= 0) return new List<Vector3>();
     Vector3[] vector3s = PathControlPointGenerator(PathSmoothingAtCurvePoint(path));
 
     List<Vector3> pathPointsCatmull = new List<Vector3>();
@@ -118,7 +118,7 @@ public class TweenHelper : MonoBehaviour
     Vector3 middle;
     Vector3 last;
 
-    for (int i = 0; i < path.Length-2; i++)
+    for (int i = 0; i < path.Length - 2; i++)
     {
       first = path[i];
       middle = path[i + 1];
@@ -130,13 +130,13 @@ public class TweenHelper : MonoBehaviour
       float angle = Vector3.Angle(targetFirst, targetSecond);
       //Debug.Log(i + "\t " + angle);
 
-      if(angle>80f)
+      if (angle > 80f)
       {
         //Ide jön a first és a last közötti optimális kanyar
         Vector3 midpoint = (first + last) / 2;
         //Debug.Log("midpoint :" + midpoint);
 
-        path[i + 1] =(middle + midpoint) / 2;
+        path[i + 1] = (middle + midpoint) / 2;
         //Debug.Log("middle modified: " + path[i + 1]);
       }
 

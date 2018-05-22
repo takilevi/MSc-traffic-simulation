@@ -20,6 +20,8 @@ public class PointHandlerScript : MonoBehaviour
   // Use this for initialization
   void Awake()
   {
+    car.GetComponent<TweenHelper>().test = null;
+    car.GetComponent<TweenHelper>().testV3 = null;
     allRoadGameObject = GameObject.FindGameObjectsWithTag("RoadElement");
     allCrossRoadGameObject = GameObject.FindGameObjectsWithTag("CrossRoad");
     allRoad = new List<GameObject>();
@@ -32,12 +34,12 @@ public class PointHandlerScript : MonoBehaviour
 
     PathCalculator();
 
-    if(car !=null && popcorn != null && closestObject != null && endObject != null)
+    if (car != null && popcorn != null && closestObject != null && endObject != null)
     {
       route.Add(closestObject);
       RouteCalculator();
     }
-    
+
   }
 
   // Update is called once per frame
@@ -72,7 +74,7 @@ public class PointHandlerScript : MonoBehaviour
         item.GetComponent<RoadElementModel>().NextElement = next;
 
       }
-      
+
     }
 
     foreach (var item in allCrossRoadGameObject)
@@ -88,7 +90,7 @@ public class PointHandlerScript : MonoBehaviour
     forwardVector = car.transform.forward;
     closestObject = GetClosestElement(car.transform.position);
     endObject = GetClosestElement(popcorn.transform.position);
-    
+
     Debug.Log("mustang start object neve: " + closestObject.name + "  pozi: " + closestObject.GetComponent<RoadElementModel>().Position +
       "  dist: " + Vector3.Distance(car.transform.position, closestObject.GetComponent<RoadElementModel>().Position) +
       "  forward: " + forwardVector);
@@ -118,24 +120,26 @@ public class PointHandlerScript : MonoBehaviour
 
   public void RouteCalculator()
   {
-    
+
     GameObject nextOne = nextElement();
     while (nextOne.name != endObject.name)
     {
       route.Add(nextOne);
-      if(nextOne.tag == "RoadElement")
+      if (nextOne.tag == "RoadElement")
       {
         nextOne = nextElement();
       }
-      if(nextOne.tag == "CrossRoad")
+      if (nextOne.tag == "CrossRoad")
       {
+        Debug.Log("CrossRoad branch start at: " + System.DateTime.Now);
         CrossRoadMeta parentMeta = nextOne.GetComponentInParent<CrossRoadMeta>();
 
         //amit a függvény visszaad ahhoz még hozzá kell csapni a kereszteződés utáni első roadelementet!!!
-        GameObject[] addables = parentMeta.AddTheseToRoute(nextOne, endObject, 
-          (nextOne.GetComponent<TransformModifier>().Position 
-                - route[route.Count-1].GetComponent<TransformModifier>().Position).normalized);
-
+        Debug.Log("before crossroad calculate call: " + System.DateTime.Now);
+        GameObject[] addables = parentMeta.AddTheseToRoute(nextOne, endObject,
+          (nextOne.GetComponent<TransformModifier>().Position
+                - route[route.Count - 1].GetComponent<TransformModifier>().Position).normalized);
+        Debug.Log("after crossroad calculate call: " + System.DateTime.Now);
         route.AddRange(addables);
 
         /*foreach (var item in route)
@@ -148,21 +152,21 @@ public class PointHandlerScript : MonoBehaviour
                 - route[route.Count - 2].GetComponent<TransformModifier>().Position).normalized;
 
         GameObject theNext = GetClosestElement(route[route.Count - 1].GetComponent<TransformModifier>().Position + newForward * 5);
-        Debug.Log("kereszteződés utáni elem: "+theNext.name+" ......   "+newForward);
+        Debug.Log("kereszteződés utáni elem: " + theNext.name + " ......   " + newForward);
 
         nextOne = theNext;
-
+        Debug.Log("CrossRoad branch end at: " + System.DateTime.Now);
       }
 
-      if (route.Count > 50)
+      if (route.Count > 115)
       {
-        Debug.Log("elindítottuk a tweenhelpert");
+        Debug.Log("túlcsordult a biztonsági számláló");
         car.GetComponent<TweenHelper>().test = route.ToArray();
         return;
       }
-      
+
     }
-    Debug.Log("végzett a ciklus");
+    Debug.Log("végzett a ciklus: " + route.Count);
     car.GetComponent<TweenHelper>().test = route.ToArray();
   }
 
@@ -171,7 +175,7 @@ public class PointHandlerScript : MonoBehaviour
     GameObject theLast = route[route.Count - 1];
     RoadElementModel theLastScript = theLast.GetComponent<RoadElementModel>();
 
-    if(theLastScript.NextElement != null)
+    if (theLastScript.NextElement != null)
     {
       Debug.Log(theLastScript.NextElement.name);
       return theLastScript.NextElement;
@@ -183,6 +187,7 @@ public class PointHandlerScript : MonoBehaviour
 
       GameObject theNext = GetClosestElement(theLastScript.Position + forwardVector * 5);
       Debug.Log(theNext.name);
+      theLastScript.NextElement = theNext;
       return theNext;
     }
     else
@@ -195,10 +200,16 @@ public class PointHandlerScript : MonoBehaviour
       GameObject theNext = GetClosestElement(theLastScript.Position + tempForward * 5);
       //Debug.Log(theNext.name + "   ...   " + theNext.GetComponent<TransformModifier>().Position);
 
+      if (theNext.name == theLast.name)
+      {
+        Debug.Log("bajvan: " + theNext.name);
+        return GameObject.Find("POPCORN");
+      }
+      theLastScript.NextElement = theNext;
       return theNext;
 
     }
-    
+
   }
 
 }

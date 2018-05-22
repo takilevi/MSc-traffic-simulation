@@ -37,6 +37,7 @@ public class CrossRoadMeta : MonoBehaviour
 
     GameObject theExit = ClosestExitPoint(options, endObject);
 
+    Children.Clear();
     foreach (Transform child in transform)
     {
       if (child.tag == "CrossRoad")
@@ -210,7 +211,7 @@ public class CrossRoadMeta : MonoBehaviour
 
     forwardPath.Add(roadItem);
 
-    for (int i = 0; i < Children.Count; i++)
+    for (int i = 0; i < 4; i++)
     {
       foreach (var item in Children)
       {
