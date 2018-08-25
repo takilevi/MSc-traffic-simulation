@@ -2,18 +2,20 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CrossRoadModel : TransformModifier {
+public class CrossRoadModel : PathPoint
+{
+  private GameObject closestRoad;
 
-  public List<GameObject> nextElementList;
-  public List<GameObject> NextElementList
+  public GameObject ClosestRoad
   {
-    get { return nextElementList; }
-    set { nextElementList = value; }
+    get { return closestRoad; }
+    set { closestRoad = value; }
   }
+
   // Use this for initialization
-  void Start () {
-		
-	}
+  void Awake () {
+    thisColor = Color.cyan;
+  }
 	
 	// Update is called once per frame
 	void Update () {

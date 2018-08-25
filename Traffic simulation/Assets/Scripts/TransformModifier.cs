@@ -5,7 +5,7 @@ using UnityEngine;
 [ExecuteInEditMode]
 public class TransformModifier : PathPoint {
 
-  public Color thisColor = Color.yellow;
+  //public Color thisColor = Color.yellow;
 
   void Awake () {
     Position = this.transform.position - this.transform.right * 2.5f - this.transform.forward * 2.5f;

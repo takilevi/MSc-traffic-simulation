@@ -81,48 +81,17 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="Traffic simulation.Plugins.csproj">
-      <Project>{473B97B7-6CE9-D781-6248-8ED2B8C7D3CF}</Project>
-      <Name>Traffic simulation.Plugins</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Assets\iTweenExamples\Flythrough\Scripts\FlythroughCameraController.cs" />
-    <Compile Include="Assets\iTweenExamples\Flythrough\Scripts\LookPoint.cs" />
-    <Compile Include="Assets\iTweenExamples\Flythrough\Scripts\LookTarget.cs" />
-    <Compile Include="Assets\iTweenExamples\Flythrough\Scripts\MovePoint.cs" />
-    <Compile Include="Assets\iTweenExamples\GridMovement\Scripts\GameBoardCSharp.cs" />
-    <Compile Include="Assets\iTweenExamples\GridMovement\Scripts\GamePieceCSharp.cs" />
-    <Compile Include="Assets\iTweenExamples\PathControlledCharacter\Scripts\Controller.cs" />
-    <Compile Include="Assets\iTweenExamples\PathExample\Scripts\PathCameraController.cs" />
-    <Compile Include="Assets\iTweenExamples\PathExample\Scripts\PathExample.cs" />
-    <Compile Include="Assets\iTweenExamples\PutOnPathExample\Scripts\Gizmo.cs" />
-    <Compile Include="Assets\iTweenExamples\PutOnPathExample\Scripts\PutOnPathExample.cs" />
-    <Compile Include="Assets\iTweenExamples\RandomPathGeneration\Scripts\CameraFollow.cs" />
-    <Compile Include="Assets\iTweenExamples\RandomPathGeneration\Scripts\PathGenerator.cs" />
-    <Compile Include="Assets\iTweenExamples\TurretExample\Scripts\Bound.cs" />
-    <Compile Include="Assets\iTweenExamples\TurretExample\Scripts\Crosshair.cs" />
-    <Compile Include="Assets\iTweenExamples\TurretExample\Scripts\Turret.cs" />
-    <Compile Include="Assets\iTweenExamples\WaypointUsage\Scripts\Waypoint.cs" />
-    <Compile Include="Assets\iTweenExamples\WaypointUsage\Scripts\WaypointExample.cs" />
-    <Compile Include="Assets\iTweenExamples\WorkingWithPhysics\Scripts\Bat.cs" />
-    <Compile Include="Assets\iTweenExamples\WorkingWithPhysics\Scripts\Brick.cs" />
-    <Compile Include="Assets\iTweenExamples\WorkingWithPhysics\Scripts\SimpleCameraFade.cs" />
-    <Compile Include="Assets\Scripts\CrossRoadHelper.cs" />
     <Compile Include="Assets\Scripts\CrossRoadMeta.cs" />
     <Compile Include="Assets\Scripts\CrossRoadModel.cs" />
-    <Compile Include="Assets\Scripts\DirectionController.cs" />
-    <Compile Include="Assets\Scripts\GlobalPathController.cs" />
     <Compile Include="Assets\Scripts\ManualInitDirection.cs" />
     <Compile Include="Assets\Scripts\PathPoint.cs" />
     <Compile Include="Assets\Scripts\PointHandlerScript.cs" />
     <Compile Include="Assets\Scripts\RoadElementModel.cs" />
-    <Compile Include="Assets\Scripts\TrafficLightController.cs" />
+    <Compile Include="Assets\Scripts\SideWalkPoint.cs" />
     <Compile Include="Assets\Scripts\TransformModifier.cs" />
     <Compile Include="Assets\Scripts\TweenHelper.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Assets\Plugins\Pixelplacement\iTween\ReadMe!\ReadMe!.txt" />
     <None Include="Assets\PolygonCity\Change_Log.txt" />
     <None Include="Assets\SimpleMilitary\Old\Materials\UnlitVertexColour_Alpha.shader" />
     <None Include="Assets\SimpleMilitary\Old\ReadMe.txt" />

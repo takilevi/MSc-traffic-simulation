@@ -126,21 +126,14 @@ public class TweenHelper : MonoBehaviour
 
       Vector3 targetFirst = (first - middle).normalized;
       Vector3 targetSecond = (middle - last).normalized;
-
       float angle = Vector3.Angle(targetFirst, targetSecond);
-      //Debug.Log(i + "\t " + angle);
 
       if (angle > 80f)
       {
-        //Ide jön a first és a last közötti optimális kanyar
+        //Smooth the sharp edges. Eg: 90 degree curves.
         Vector3 midpoint = (first + last) / 2;
-        //Debug.Log("midpoint :" + midpoint);
-
         path[i + 1] = (middle + midpoint) / 2;
-        //Debug.Log("middle modified: " + path[i + 1]);
       }
-
-
     }
     return path;
   }

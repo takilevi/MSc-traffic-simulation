@@ -3,7 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [ExecuteInEditMode]
-public class RoadElementModel : TransformModifier {
+public class RoadElementModel : PathPoint {
+
+  private GameObject previousElement;
+
+  public GameObject PreviousElement
+  {
+    get { return previousElement; }
+    set { previousElement = value; }
+  }
 
   public GameObject nextElement;
   public GameObject NextElement
@@ -18,11 +26,6 @@ public class RoadElementModel : TransformModifier {
 
   // Update is called once per frame
   void Update () {
-    //Debug.DrawLine(this.Position, NextElement.GetComponent<TransformModifier>().Position, Color.red);
-  }
-
-  public void FindMyNextElementByDirection(Vector3 dir)
-  {
 
   }
 }

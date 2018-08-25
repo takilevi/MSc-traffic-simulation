@@ -3,16 +3,29 @@ using System.Collections;
 
 [ExecuteInEditMode]
 public class PathPoint : MonoBehaviour {
-  public Vector3 Position { get; set; }
 
+  public Vector3 Position
+  {
+    get { return transform.position; }
+    set { transform.position = value; }
+  }
+
+  public Color thisColor;
+
+  private void Start()
+  {
+    
+  }
   void Awake()
   {
-    Position = transform.position;
+    thisColor = Color.blue;
 
   }
 
   void OnDrawGizmos(){
-		Gizmos.color=Color.blue;
-		Gizmos.DrawWireSphere(Position,.25f);
-	}
+		Gizmos.color= thisColor;
+		Gizmos.DrawWireSphere(transform.position,.25f);
+    Vector3 forward = transform.TransformDirection(Vector3.forward) * 2f;
+    Debug.DrawRay(transform.position, forward, Color.green);
+  }
 }
