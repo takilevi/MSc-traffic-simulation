@@ -19,10 +19,10 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4025186699383420}
-  - component: {fileID: 114652636126869862}
+  - component: {fileID: 114891503005280150}
   m_Layer: 0
   m_Name: Lines_Road_PivotCenter (2)
-  m_TagString: Untagged
+  m_TagString: RoadModel
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -35,10 +35,10 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4449288147408930}
-  - component: {fileID: 114131042007800138}
+  - component: {fileID: 114741673783090716}
   m_Layer: 0
   m_Name: Lines_Road_PivotCenter (1)
-  m_TagString: Untagged
+  m_TagString: RoadModel
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -239,7 +239,7 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1676784561419964}
   m_Mesh: {fileID: 4300000, guid: e80e8ce71e5a18e49aa1ffadb362bad1, type: 3}
---- !u!114 &114131042007800138
+--- !u!114 &114741673783090716
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -247,11 +247,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1433545429413022}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b6e73cf16274d45c2951316a561387ec, type: 3}
+  m_Script: {fileID: 11500000, guid: 15ce7942a70e66b43b85e7aa0f2cee02, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   thisColor: {r: 0, g: 0, b: 1, a: 1}
---- !u!114 &114652636126869862
+  previousElement: {fileID: 0}
+  nextElement: {fileID: 0}
+--- !u!114 &114891503005280150
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -259,7 +261,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1208838708781594}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b6e73cf16274d45c2951316a561387ec, type: 3}
+  m_Script: {fileID: 11500000, guid: 15ce7942a70e66b43b85e7aa0f2cee02, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   thisColor: {r: 0, g: 0, b: 1, a: 1}
+  previousElement: {fileID: 0}
+  nextElement: {fileID: 0}

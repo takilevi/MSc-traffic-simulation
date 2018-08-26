@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 23691213600057666}
   m_Layer: 0
   m_Name: SM_Env_Road_Bare_01
-  m_TagString: RoadElement
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -121,3 +121,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6e73cf16274d45c2951316a561387ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  thisColor: {r: 0, g: 0, b: 0, a: 0}

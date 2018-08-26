@@ -68,10 +68,10 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4136265101354544}
-  - component: {fileID: 114308467554362174}
+  - component: {fileID: 114629265530022348}
   m_Layer: 0
   m_Name: Basic_Road_PivotCenter (2)
-  m_TagString: Untagged
+  m_TagString: RoadModel
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -84,10 +84,10 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4749731891619366}
-  - component: {fileID: 114463680175582640}
+  - component: {fileID: 114399811629440810}
   m_Layer: 0
   m_Name: Basic_Road_PivotCenter (1)
-  m_TagString: Untagged
+  m_TagString: RoadModel
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -239,19 +239,7 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1108138704299118}
   m_Mesh: {fileID: 4300000, guid: 3ae7387e133e89f4d8f6abba42078519, type: 3}
---- !u!114 &114308467554362174
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1905768807605204}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b6e73cf16274d45c2951316a561387ec, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  thisColor: {r: 0, g: 0, b: 1, a: 1}
---- !u!114 &114463680175582640
+--- !u!114 &114399811629440810
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -259,7 +247,23 @@ MonoBehaviour:
   m_GameObject: {fileID: 1961245097084120}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b6e73cf16274d45c2951316a561387ec, type: 3}
+  m_Script: {fileID: 11500000, guid: 15ce7942a70e66b43b85e7aa0f2cee02, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   thisColor: {r: 0, g: 0, b: 1, a: 1}
+  previousElement: {fileID: 0}
+  nextElement: {fileID: 0}
+--- !u!114 &114629265530022348
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1905768807605204}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15ce7942a70e66b43b85e7aa0f2cee02, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  thisColor: {r: 0, g: 0, b: 1, a: 1}
+  previousElement: {fileID: 0}
+  nextElement: {fileID: 0}

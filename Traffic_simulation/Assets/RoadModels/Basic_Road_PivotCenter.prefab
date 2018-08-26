@@ -19,7 +19,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4771864081288682}
-  - component: {fileID: 114368647389295974}
+  - component: {fileID: 114563211185191418}
   m_Layer: 0
   m_Name: Basic_Road_PivotCenter
   m_TagString: Untagged
@@ -39,7 +39,7 @@ GameObject:
   - component: {fileID: 23183651405304500}
   m_Layer: 0
   m_Name: SM_Env_Road_01
-  m_TagString: RoadElement
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -110,7 +110,7 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1726973499382460}
   m_Mesh: {fileID: 4300000, guid: 3ae7387e133e89f4d8f6abba42078519, type: 3}
---- !u!114 &114368647389295974
+--- !u!114 &114563211185191418
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -118,6 +118,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1197906197587046}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b6e73cf16274d45c2951316a561387ec, type: 3}
+  m_Script: {fileID: 11500000, guid: 15ce7942a70e66b43b85e7aa0f2cee02, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  thisColor: {r: 0, g: 0, b: 0, a: 0}
+  previousElement: {fileID: 0}
+  nextElement: {fileID: 0}

@@ -136,10 +136,9 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4842471736071482}
-  - component: {fileID: 114127420993997632}
   m_Layer: 0
   m_Name: Bare_Road_PivotCenter (4)
-  m_TagString: CrossRoad
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -169,10 +168,9 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4077231757924134}
-  - component: {fileID: 114472445923376630}
   m_Layer: 0
   m_Name: Bare_Road_PivotCenter (2)
-  m_TagString: CrossRoad
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -234,10 +232,9 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4223951340758912}
-  - component: {fileID: 114700471837199736}
   m_Layer: 0
   m_Name: Bare_Road_PivotCenter (3)
-  m_TagString: CrossRoad
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -399,10 +396,9 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4438994071471380}
-  - component: {fileID: 114214193447711818}
   m_Layer: 0
   m_Name: Bare_Road_PivotCenter (1)
-  m_TagString: CrossRoad
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1252,36 +1248,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   thisColor: {r: 0, g: 1, b: 1, a: 1}
---- !u!114 &114127420993997632
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1338825303123010}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 738472a48f8418a488a7aed78fe31d7f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  thisColor: {r: 0, g: 1, b: 1, a: 1}
 --- !u!114 &114193152510379932
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1641495760334866}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 738472a48f8418a488a7aed78fe31d7f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  thisColor: {r: 0, g: 1, b: 1, a: 1}
---- !u!114 &114214193447711818
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1933271393628774}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 738472a48f8418a488a7aed78fe31d7f, type: 3}
@@ -1306,18 +1278,6 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1825904198760396}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 738472a48f8418a488a7aed78fe31d7f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  thisColor: {r: 0, g: 1, b: 1, a: 1}
---- !u!114 &114472445923376630
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1403218348868462}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 738472a48f8418a488a7aed78fe31d7f, type: 3}
@@ -1411,18 +1371,6 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1965213778674432}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 738472a48f8418a488a7aed78fe31d7f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  thisColor: {r: 0, g: 1, b: 1, a: 1}
---- !u!114 &114700471837199736
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1465560338122518}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 738472a48f8418a488a7aed78fe31d7f, type: 3}

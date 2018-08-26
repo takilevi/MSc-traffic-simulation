@@ -28,4 +28,6 @@ public class PathPoint : MonoBehaviour {
     Vector3 forward = transform.TransformDirection(Vector3.forward) * 2f;
     Debug.DrawRay(transform.position, forward, Color.green);
   }
+
+  public virtual void FindMyNeighbours() { }
 }
