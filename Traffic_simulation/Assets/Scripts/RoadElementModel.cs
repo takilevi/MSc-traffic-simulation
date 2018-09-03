@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[ExecuteInEditMode]
 public class RoadElementModel : PathPoint {
 
   public GameObject previousElement;

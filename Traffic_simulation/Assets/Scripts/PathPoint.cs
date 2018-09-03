@@ -1,7 +1,6 @@
 using UnityEngine;
 using System.Collections;
 
-[ExecuteInEditMode]
 public class PathPoint : MonoBehaviour {
 
   public Vector3 Position

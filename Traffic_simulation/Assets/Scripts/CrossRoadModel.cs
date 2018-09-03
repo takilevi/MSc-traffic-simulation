@@ -42,7 +42,7 @@ public class CrossRoadModel : PathPoint
     {
       foreach (var item in options)
       {
-        Debug.Log("crossroadban vagyok, ez egy from elem; szülő: " + this.transform.parent);
+        //Debug.Log("crossroadban vagyok, ez egy from elem; szülő: " + this.transform.parent);
 
         if(item.GetComponent<CrossRoadModel>().ClosestRoad == null)
         {

@@ -81,6 +81,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\AStar.cs" />
     <Compile Include="Assets\Scripts\CrossRoadMeta.cs" />
     <Compile Include="Assets\Scripts\CrossRoadModel.cs" />
     <Compile Include="Assets\Scripts\DiscoverNeighbours.cs" />

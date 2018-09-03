@@ -52,7 +52,7 @@ public class CrossRoadMeta : MonoBehaviour
     return theRouteElements;
   }
 
-  List<GameObject> GetOptions(GameObject from)
+  public List<GameObject> GetOptions(GameObject from)
   {
     foreach (var item in roadGroup)
     {
