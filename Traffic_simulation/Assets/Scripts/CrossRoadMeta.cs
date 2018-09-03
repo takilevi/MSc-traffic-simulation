@@ -248,4 +248,19 @@ public class CrossRoadMeta : MonoBehaviour
     }
     return theChoosenOne;
   }
+
+  public List<GameObject> PossibleEntrancesToExit(GameObject exit)
+  {
+    List<GameObject> entrances = new List<GameObject>();
+
+    foreach (var item in roadGroup)
+    {
+      if (item.options.Contains(exit))
+      {
+        entrances.Add(item.from);
+      }
+    }
+
+    return entrances;
+  }
 }

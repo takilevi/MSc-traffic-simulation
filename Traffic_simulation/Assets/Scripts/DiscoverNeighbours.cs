@@ -64,10 +64,10 @@ public class DiscoverNeighbours : MonoBehaviour {
     calculatedRoute.Add(from);
 
     bool straightRoad = true;
-    List<GameObject> exits;
+    List<GameObject> exitsFromStart;
     while (straightRoad)
     {
-      GameObject nextElement = calculatedRoute[calculatedRoute.Count - 1];
+      GameObject nextElement = calculatedRoute[calculatedRoute.Count - 1].GetComponent<RoadElementModel>().nextElement;
 
       if (GameObject.ReferenceEquals(nextElement, to))
       {
@@ -76,12 +76,37 @@ public class DiscoverNeighbours : MonoBehaviour {
       Component nextComp = nextElement.GetComponent<CrossRoadModel>();
       if(nextComp != null)
       {
-        exits = nextComp.GetComponentInParent<CrossRoadMeta>().GetOptions(nextElement);
+        exitsFromStart = nextComp.GetComponentInParent<CrossRoadMeta>().GetOptions(nextElement);
         straightRoad = false;
+      }
+      else
+      {
+        calculatedRoute.Add(nextElement);
       }
     }
 
     //ha megvan az elem akkor már kiléptünk
     //ha megvan a legközelebbi kereszteződés akkor ide jutottunk, a lehetséges kimenetelek a exits változóban
+
+    bool searchNearestCrossToEnd = true;
+    List<GameObject> entranceToEnd;
+    GameObject prev = to;
+    while (searchNearestCrossToEnd)
+    {
+      GameObject prevElement = prev.GetComponent<RoadElementModel>().previousElement;
+
+      Component prevComp = prevElement.GetComponent<CrossRoadModel>();
+      if (prevComp != null)
+      {
+        entranceToEnd = prevComp.GetComponentInParent<CrossRoadMeta>().PossibleEntrancesToExit(prevElement);
+        searchNearestCrossToEnd = false;
+      }
+
+      prev = prevElement;
+    }
+
+    //megvannak a CÉL legközelebbi entrance pontjai
+
+    //az exitsFromStart-ból az egyik entranceToEnd-ig kell eljutni
   }
 }
