@@ -7,9 +7,7 @@ using UnityEngine;
 [ExecuteInEditMode]
 public class DiscoverNeighbours : MonoBehaviour
 {
-	public Dictionary<GameObject, GameObject> carsToDestinations;
 	public GameObject discoverStartObj;
-	public bool manualTriggerRediscover = false;
 
 	public GameObject[] allRoadGameObject;
 	public GameObject[] allCrossRoadGameObject;
@@ -20,6 +18,22 @@ public class DiscoverNeighbours : MonoBehaviour
 	public GameObject from;
 	public GameObject to;
 
+	public class AStarNode
+	{
+		public GameObject node;
+		public GameObject parent;
+		public float F;
+
+		public AStarNode(GameObject node, GameObject parent, float f)
+		{
+			this.node = node;
+			this.parent = parent;
+			F = f;
+		}
+	}
+	public List<AStarNode> openList;
+	public List<AStarNode> closedList;
+
 	void Awake()
 	{
 		allRoadGameObject = GameObject.FindGameObjectsWithTag("RoadModel");
@@ -27,6 +41,9 @@ public class DiscoverNeighbours : MonoBehaviour
 		allRoad = new List<GameObject>();
 		allRoad.AddRange(allRoadGameObject);
 		allRoad.AddRange(allCrossRoadGameObject);
+
+		openList = new List<AStarNode>();
+		closedList = new List<AStarNode>();
 
 		crossMetaObject = GameObject.FindObjectsOfType<CrossRoadMeta>();
 
@@ -69,6 +86,14 @@ public class DiscoverNeighbours : MonoBehaviour
 
 	void FindShortestPath(GameObject from, GameObject to)
 	{
+		foreach (var item in crossMetaObject)
+		{
+			//A* -hoz szükséges számítások
+			//csúcspontok súlyozása G-H-F értékek
+			item.CallGCalculationOnFromElements();
+			item.CallHCalculationOnExitElements(to);
+		}
+
 		calculatedRoute.Add(from);
 
 		bool straightRoad = true;
@@ -87,6 +112,13 @@ public class DiscoverNeighbours : MonoBehaviour
 			{
 				exitsFromStart = nextComp.GetComponentInParent<CrossRoadMeta>().GetOptions(nextElement);
 				straightRoad = false;
+
+				foreach (var item in exitsFromStart)
+				{
+					openList.Add(new AStarNode(item, null, calculatedRoute.Count + item.GetComponent<CrossRoadModel>().H));
+					openList.Sort((x, y) => x.F.CompareTo(y.F));
+				}
+
 			}
 			calculatedRoute.Add(nextElement);
 
@@ -131,15 +163,7 @@ public class DiscoverNeighbours : MonoBehaviour
 			return;
 		}
 
-		foreach (var item in crossMetaObject)
-		{
-			//A* -hoz szükséges számítások
-			//csúcspontok súlyozása G-H-F értékek
-			item.CallGCalculationOnFromElements();
-			item.CallHCalculationOnExitElements(to);
-		}
-
-		//innen kezdődik maga az algoritmus
+		//még egy kics shortcut ellenőrzés
 
 		List<GameObject> exitDetection = new List<GameObject>();
 		foreach (var item in exitsFromStart)
@@ -154,9 +178,59 @@ public class DiscoverNeighbours : MonoBehaviour
 						 new List<GameObject>(exitDetection)
 						 .ConvertAll(i => String.Concat(i.ToString(), i.transform.parent.ToString(), "\n"))
 						 .ToArray()));
+
 		if (entrancesToEnd.Intersect(exitDetection).Any())
 		{
 			Debug.Log("megvagyunk");
 		}
+
+		//innen kezdődik maga az algoritmus
+
+		Debug.Log("Open list :\n " + String.Join("",
+						 new List<AStarNode>(openList)
+						 .ConvertAll(i => String.Concat(i.node.ToString(), i.node.transform.parent.ToString(), "\t", i.F, "\n"))
+						 .ToArray()));
+
+
+		do
+		{
+			/*
+			 * 
+			 * 
+			 * 
+			 	currentSquare = [openList squareWithLowestFScore]; // Get the square with the lowest F score
+	
+				[closedList add:currentSquare]; // add the current square to the closed list
+					[openList remove:currentSquare]; // remove it to the open list
+				
+				if ([closedList contains:destinationSquare]) { // if we added the destination to the closed list, we've found a path
+					// PATH FOUND
+						break; // break the loop
+				}
+	
+				adjacentSquares = [currentSquare walkableAdjacentSquares]; // Retrieve all its walkable adjacent squares
+	
+				foreach (aSquare in adjacentSquares) {
+		
+				if ([closedList contains:aSquare]) { // if this adjacent square is already in the closed list ignore it
+					continue; // Go to the next adjacent square
+				}
+		
+				if (![openList contains:aSquare]) { // if its not in the open list
+			
+					// compute its score, set the parent
+					[openList add:aSquare]; // and add it to the open list
+			
+				} else { // if its already in the open list
+			
+					// test if using the current G score make the aSquare F score lower, if yes update the parent because it means its a better path
+			
+					}
+				}
+
+		https://www.raywenderlich.com/3016-introduction-to-a-pathfinding
+			 * 
+			 * */
+		} while (!openList.Any());
 	}
 }
