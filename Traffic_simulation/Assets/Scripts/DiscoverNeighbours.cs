@@ -31,8 +31,8 @@ public class DiscoverNeighbours : MonoBehaviour
 			F = f;
 		}
 	}
-	public List<AStarNode> openList;
-	public List<AStarNode> closedList;
+	public Queue<AStarNode> openList;
+	public Queue<AStarNode> closedList;
 
 	void Awake()
 	{
@@ -42,8 +42,8 @@ public class DiscoverNeighbours : MonoBehaviour
 		allRoad.AddRange(allRoadGameObject);
 		allRoad.AddRange(allCrossRoadGameObject);
 
-		openList = new List<AStarNode>();
-		closedList = new List<AStarNode>();
+		openList = new Queue<AStarNode>();
+		closedList = new Queue<AStarNode>();
 
 		crossMetaObject = GameObject.FindObjectsOfType<CrossRoadMeta>();
 
@@ -115,9 +115,10 @@ public class DiscoverNeighbours : MonoBehaviour
 
 				foreach (var item in exitsFromStart)
 				{
-					openList.Add(new AStarNode(item, null, calculatedRoute.Count + item.GetComponent<CrossRoadModel>().H));
-					openList.Sort((x, y) => x.F.CompareTo(y.F));
-				}
+					openList.Enqueue(new AStarNode(item, null, calculatedRoute.Count + item.GetComponent<CrossRoadModel>().H));
+          //openList.Sort((x, y) => x.F.CompareTo(y.F));
+          openList = new Queue<AStarNode>(openList.OrderBy(x => x.F));
+        }
 
 			}
 			calculatedRoute.Add(nextElement);
@@ -194,43 +195,27 @@ public class DiscoverNeighbours : MonoBehaviour
 
 		do
 		{
-			/*
-			 * 
-			 * 
-			 * 
-			 	currentSquare = [openList squareWithLowestFScore]; // Get the square with the lowest F score
-	
-				[closedList add:currentSquare]; // add the current square to the closed list
-					[openList remove:currentSquare]; // remove it to the open list
-				
-				if ([closedList contains:destinationSquare]) { // if we added the destination to the closed list, we've found a path
-					// PATH FOUND
-						break; // break the loop
-				}
-	
-				adjacentSquares = [currentSquare walkableAdjacentSquares]; // Retrieve all its walkable adjacent squares
-	
-				foreach (aSquare in adjacentSquares) {
-		
-				if ([closedList contains:aSquare]) { // if this adjacent square is already in the closed list ignore it
-					continue; // Go to the next adjacent square
-				}
-		
-				if (![openList contains:aSquare]) { // if its not in the open list
-			
-					// compute its score, set the parent
-					[openList add:aSquare]; // and add it to the open list
-			
-				} else { // if its already in the open list
-			
-					// test if using the current G score make the aSquare F score lower, if yes update the parent because it means its a better path
-			
-					}
-				}
+      closedList.Enqueue(openList.Dequeue());
 
-		https://www.raywenderlich.com/3016-introduction-to-a-pathfinding
+      if (entrancesToEnd.Contains(closedList.ToList().Last().node))
+      {
+        //path found
+        //DONE
+        Debug.Log("DONE");
+        break;
+      }
+
+      /*
+			 *
+       * https://www.raywenderlich.com/3016-introduction-to-a-pathfinding
 			 * 
 			 * */
-		} while (!openList.Any());
+
+      Debug.Log("Closed list :\n " + String.Join("",
+            new List<AStarNode>(closedList)
+            .ConvertAll(i => String.Concat(i.node.ToString(), i.node.transform.parent.ToString(), "\t", i.F, "\n"))
+            .ToArray()));
+
+    } while (openList.Any());
 	}
 }
