@@ -21,10 +21,10 @@ public class DiscoverNeighbours : MonoBehaviour
 	public class AStarNode
 	{
 		public GameObject node;
-		public GameObject parent;
+		public AStarNode parent;
 		public float F;
 
-		public AStarNode(GameObject node, GameObject parent, float f)
+		public AStarNode(GameObject node, AStarNode parent, float f)
 		{
 			this.node = node;
 			this.parent = parent;
@@ -116,9 +116,9 @@ public class DiscoverNeighbours : MonoBehaviour
 				foreach (var item in exitsFromStart)
 				{
 					openList.Enqueue(new AStarNode(item, null, calculatedRoute.Count + item.GetComponent<CrossRoadModel>().H));
-          //openList.Sort((x, y) => x.F.CompareTo(y.F));
-          openList = new Queue<AStarNode>(openList.OrderBy(x => x.F));
-        }
+					//openList.Sort((x, y) => x.F.CompareTo(y.F));
+					openList = new Queue<AStarNode>(openList.OrderBy(x => x.F));
+				}
 
 			}
 			calculatedRoute.Add(nextElement);
@@ -195,27 +195,90 @@ public class DiscoverNeighbours : MonoBehaviour
 
 		do
 		{
-      closedList.Enqueue(openList.Dequeue());
+			closedList.Enqueue(openList.Dequeue());
+			if (GameObject.ReferenceEquals(prevUntilClosestCross,closedList.ToList().Last().node))
+			{
+				//path found
+				//DONE
+				Debug.Log("DONE");
+				AStarNode arrive = closedList.ToList().Last();
+				AStarNode nextReverse = arrive;
+				do
+				{
+					Debug.Log("parent node: " + nextReverse.node + " ----- " + nextReverse.node.transform.parent);
+					nextReverse = nextReverse.parent;
 
-      if (entrancesToEnd.Contains(closedList.ToList().Last().node))
-      {
-        //path found
-        //DONE
-        Debug.Log("DONE");
-        break;
-      }
+				} while (nextReverse != null);
+				break;
+			}
 
-      /*
+			GameObject adjacentEntrance = closedList.ToList().Last().node.GetComponent<CrossRoadModel>().canConnectToFromExit;
+			List<GameObject> adjacentExits = adjacentEntrance.GetComponentInParent<CrossRoadMeta>().GetOptions(adjacentEntrance);
+			List<AStarNode> adjacentAStarNodes = new List<AStarNode>();
+			foreach (var item in adjacentExits)
+			{
+				adjacentAStarNodes.Add(new AStarNode(item, closedList.ToList().Last(), closedList.ToList().Last().F + adjacentEntrance.GetComponent<CrossRoadModel>().G + item.GetComponent<CrossRoadModel>().H));
+			}
+
+			foreach (var aSquare in adjacentAStarNodes)
+			{
+				//megnézzük hogy benne van e már a closedlistben
+				bool flag = false;
+				foreach (var closed in closedList)
+				{
+					if (GameObject.ReferenceEquals(closed.node, aSquare.node))
+					{
+						flag = true;
+						break;
+					}
+				}
+				if (flag) continue;
+
+				AStarNode oldOpen = null;
+				foreach (var open in openList)
+				{
+					if (GameObject.ReferenceEquals(open.node, aSquare.node))
+					{
+						oldOpen = open;
+					}
+				}
+				if (oldOpen == null)
+				{
+					openList.Enqueue(aSquare);
+					openList = new Queue<AStarNode>(openList.OrderBy(x => x.F));
+				}
+				else
+				{
+					//Recalculate the parent and the F value!!!
+					
+					//nemhiszem hogy ez a rész jó
+					float oldF = oldOpen.F;
+					float newF = aSquare.F;
+
+					Debug.Log("oldF: " + oldF + " ------ newF: " + newF);
+					Debug.Log("old node: " + oldOpen.node + " parent: " + oldOpen.node.transform.parent + " ------ new node: " + aSquare.node + " parent: " + aSquare.node.transform.parent);
+					if (newF < oldF)
+					{
+						Debug.Log("bejöttünk a newF kisebb oldF ágba ---- oldparent : " + oldOpen.parent + "   --- newparent: " + closedList.ToList().Last().node);
+						oldOpen.F = newF;
+						oldOpen.parent = closedList.ToList().Last();
+					}
+
+					//not cool
+				}
+			}
+
+			/*
 			 *
        * https://www.raywenderlich.com/3016-introduction-to-a-pathfinding
 			 * 
 			 * */
 
-      Debug.Log("Closed list :\n " + String.Join("",
-            new List<AStarNode>(closedList)
-            .ConvertAll(i => String.Concat(i.node.ToString(), i.node.transform.parent.ToString(), "\t", i.F, "\n"))
-            .ToArray()));
+			Debug.Log("Closed list :\n " + String.Join("",
+						new List<AStarNode>(closedList)
+						.ConvertAll(i => String.Concat(i.node.ToString(), i.node.transform.parent.ToString(), "\t", i.F, "\n"))
+						.ToArray()));
 
-    } while (openList.Any());
+		} while (openList.Any());
 	}
 }
