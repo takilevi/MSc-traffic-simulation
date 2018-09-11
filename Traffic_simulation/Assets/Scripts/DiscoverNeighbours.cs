@@ -33,6 +33,7 @@ public class DiscoverNeighbours : MonoBehaviour
 	}
 	public Queue<AStarNode> openList;
 	public Queue<AStarNode> closedList;
+	public List<GameObject> aStarResult;
 
 	void Awake()
 	{
@@ -44,6 +45,7 @@ public class DiscoverNeighbours : MonoBehaviour
 
 		openList = new Queue<AStarNode>();
 		closedList = new Queue<AStarNode>();
+		aStarResult = new List<GameObject>();
 
 		crossMetaObject = GameObject.FindObjectsOfType<CrossRoadMeta>();
 
@@ -105,6 +107,7 @@ public class DiscoverNeighbours : MonoBehaviour
 			if (GameObject.ReferenceEquals(nextElement, to))
 			{
 				Debug.Log("megvagyunk");
+				calculatedRoute.Add(nextElement);
 				return;
 			}
 			Component nextComp = nextElement.GetComponent<CrossRoadModel>();
@@ -116,12 +119,12 @@ public class DiscoverNeighbours : MonoBehaviour
 				foreach (var item in exitsFromStart)
 				{
 					openList.Enqueue(new AStarNode(item, null, calculatedRoute.Count + item.GetComponent<CrossRoadModel>().H));
-					//openList.Sort((x, y) => x.F.CompareTo(y.F));
 					openList = new Queue<AStarNode>(openList.OrderBy(x => x.F));
 				}
 
 			}
 			calculatedRoute.Add(nextElement);
+			
 
 		}
 
@@ -129,7 +132,6 @@ public class DiscoverNeighbours : MonoBehaviour
 		//ha megvan a legközelebbi kereszteződés akkor ide jutottunk, a lehetséges kimenetelek a exits változóban
 
 		bool searchNearestCrossToEnd = true;
-		List<GameObject> entrancesToEnd = new List<GameObject>();
 		GameObject prevUntilClosestCross = to;
 		while (searchNearestCrossToEnd)
 		{
@@ -138,53 +140,14 @@ public class DiscoverNeighbours : MonoBehaviour
 			Component prevComp = prevElement.GetComponent<CrossRoadModel>();
 			if (prevComp != null)
 			{
-				entrancesToEnd = prevComp.GetComponentInParent<CrossRoadMeta>().PossibleEntrancesToExit(prevElement);
 				searchNearestCrossToEnd = false;
 			}
 
 			prevUntilClosestCross = prevElement;
 		}
 
-		/*
-		Debug.Log("Calculated route :\n " + String.Join("",
-						 new List<GameObject>(calculatedRoute)
-						 .ConvertAll(i => String.Concat(i.ToString(), i.transform.parent.ToString(),"\n"))
-						 .ToArray()));
-		*/
-
 
 		//megvannak a CÉL legközelebbi entrance pontjai
-		//az exitsFromStart-ból az egyik entranceToEnd-ig kell eljutni
-		//egy gyors forciklusban megnézni hogy az exitek és az egyetlen bejárat közt van e átfedés - magyarul ugyanabba a kereszteződésbe érkezünk-e
-
-		if (exitsFromStart.Contains(prevUntilClosestCross))
-		{
-			Debug.Log("megvagyunk");
-			Debug.Log(prevUntilClosestCross.name + "......közös be/kijárat....." + prevUntilClosestCross.transform.parent.name);
-			return;
-		}
-
-		//még egy kics shortcut ellenőrzés
-
-		List<GameObject> exitDetection = new List<GameObject>();
-		foreach (var item in exitsFromStart)
-		{
-			exitDetection.Add(item.GetComponent<CrossRoadModel>().canConnectToFromExit);
-		}
-		Debug.Log("Entrance to end object :\n " + String.Join("",
-						 new List<GameObject>(entrancesToEnd)
-						 .ConvertAll(i => String.Concat(i.ToString(), i.transform.parent.ToString(), "\n"))
-						 .ToArray()));
-		Debug.Log("Exit connections from start object :\n " + String.Join("",
-						 new List<GameObject>(exitDetection)
-						 .ConvertAll(i => String.Concat(i.ToString(), i.transform.parent.ToString(), "\n"))
-						 .ToArray()));
-
-		if (entrancesToEnd.Intersect(exitDetection).Any())
-		{
-			Debug.Log("megvagyunk");
-		}
-
 		//innen kezdődik maga az algoritmus
 
 		Debug.Log("Open list :\n " + String.Join("",
@@ -199,16 +162,8 @@ public class DiscoverNeighbours : MonoBehaviour
 			if (GameObject.ReferenceEquals(prevUntilClosestCross,closedList.ToList().Last().node))
 			{
 				//path found
-				//DONE
-				Debug.Log("DONE");
-				AStarNode arrive = closedList.ToList().Last();
-				AStarNode nextReverse = arrive;
-				do
-				{
-					Debug.Log("parent node: " + nextReverse.node + " ----- " + nextReverse.node.transform.parent);
-					nextReverse = nextReverse.parent;
-
-				} while (nextReverse != null);
+				Debug.Log("Found the exit point, from where we will reach the end object");
+				
 				break;
 			}
 
@@ -245,40 +200,60 @@ public class DiscoverNeighbours : MonoBehaviour
 				if (oldOpen == null)
 				{
 					openList.Enqueue(aSquare);
-					openList = new Queue<AStarNode>(openList.OrderBy(x => x.F));
 				}
 				else
 				{
 					//Recalculate the parent and the F value!!!
 					
-					//nemhiszem hogy ez a rész jó
 					float oldF = oldOpen.F;
 					float newF = aSquare.F;
 
-					Debug.Log("oldF: " + oldF + " ------ newF: " + newF);
-					Debug.Log("old node: " + oldOpen.node + " parent: " + oldOpen.node.transform.parent + " ------ new node: " + aSquare.node + " parent: " + aSquare.node.transform.parent);
+					//Debug.Log("oldF: " + oldF + " ------ newF: " + newF);
 					if (newF < oldF)
 					{
-						Debug.Log("bejöttünk a newF kisebb oldF ágba ---- oldparent : " + oldOpen.parent + "   --- newparent: " + closedList.ToList().Last().node);
+						Debug.Log("oldF: " + oldF + " ------ newF: " + newF + "   -----whoami- " + String.Concat(oldOpen.node.name,oldOpen.node.transform.parent.name));
+						Debug.Log("bejöttünk a newF kisebb oldF ágba ---- oldparent : " + oldOpen.parent.node.name +  " ----  " + oldOpen.parent.node.transform.parent + "   --- newparent: " + closedList.ToList().Last().node + "  -----  " + closedList.ToList().Last().node.transform.parent);
 						oldOpen.F = newF;
 						oldOpen.parent = closedList.ToList().Last();
 					}
-
-					//not cool
 				}
+
+				openList = new Queue<AStarNode>(openList.OrderBy(x => x.F));
 			}
 
 			/*
-			 *
        * https://www.raywenderlich.com/3016-introduction-to-a-pathfinding
 			 * 
 			 * */
 
-			Debug.Log("Closed list :\n " + String.Join("",
-						new List<AStarNode>(closedList)
-						.ConvertAll(i => String.Concat(i.node.ToString(), i.node.transform.parent.ToString(), "\t", i.F, "\n"))
-						.ToArray()));
-
 		} while (openList.Any());
+
+		//kész az útkeresés, ez a csúcsok közti kapcsolat térképe
+		AStarNode nextReverse = closedList.ToList().Last();
+		do
+		{
+			aStarResult.Add(nextReverse.node);
+			nextReverse = nextReverse.parent;
+
+		} while (nextReverse != null);
+
+		//kövi feladat: minden objektumok beletenni a route-ba
+		//1. A kereszteződések
+		//2. Az utak
+
+		aStarResult.Reverse();
+
+		Debug.Log("REVERSE A* pathfinding result :\n " + String.Join("",
+						 new List<GameObject>(aStarResult)
+						 .ConvertAll(i => String.Concat(i.ToString(), i.transform.parent.ToString(), "\n"))
+						 .ToArray()));
+
+		List<GameObject> abc = new List<GameObject>();
+		abc.AddRange(calculatedRoute.Last().GetComponentInParent<CrossRoadMeta>().GetDirectionObjects(calculatedRoute.Last(), aStarResult.First()));
+
+		Debug.Log("elágazás objektumok :\n " + String.Join("",
+						 new List<GameObject>(abc)
+						 .ConvertAll(i => String.Concat(i.ToString(), i.transform.parent.ToString(), "\n"))
+						 .ToArray()));
 	}
 }

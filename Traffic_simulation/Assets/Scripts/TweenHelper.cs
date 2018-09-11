@@ -25,7 +25,7 @@ public class TweenHelper : MonoBehaviour
     {
 
       // targetObject.transform.position = test[0].position;
-      targetObject.transform.position = test[0].GetComponent<TransformModifier>().Position;
+      targetObject.transform.position = test[0].transform.position;
 
       pathPointsCatMull = GetInterpolatedPath(testV3).ToArray();
       //Debug.Log("hossz: " + pathPointsCatMull.Length);
@@ -62,7 +62,7 @@ public class TweenHelper : MonoBehaviour
       Vector3[] suppliedLine = new Vector3[test.Length];
       for (int i = 0; i < test.Length; i++)
       {
-        suppliedLine[i] = test[i].GetComponent<TransformModifier>().Position;
+        suppliedLine[i] = test[i].transform.position;
       }
       testV3 = suppliedLine;
       DrawForwardPath(testV3, mainPathColor);

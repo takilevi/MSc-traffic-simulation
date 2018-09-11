@@ -129,16 +129,19 @@ public class PointHandlerScript : MonoBehaviour
       {
         nextOne = nextElement();
       }
-      if (nextOne.tag == "CrossRoad")
-      {
-        Debug.Log("CrossRoad branch start at: " + System.DateTime.Now);
-        CrossRoadMeta parentMeta = nextOne.GetComponentInParent<CrossRoadMeta>();
+			if (nextOne.tag == "CrossRoad")
+			{
+				Debug.Log("CrossRoad branch start at: " + System.DateTime.Now);
+				CrossRoadMeta parentMeta = nextOne.GetComponentInParent<CrossRoadMeta>();
 
-        //amit a függvény visszaad ahhoz még hozzá kell csapni a kereszteződés utáni első roadelementet!!!
-        Debug.Log("before crossroad calculate call: " + System.DateTime.Now);
-        GameObject[] addables = parentMeta.AddTheseToRoute(nextOne, endObject,
-          (nextOne.GetComponent<TransformModifier>().Position
-                - route[route.Count - 1].GetComponent<TransformModifier>().Position).normalized);
+				//amit a függvény visszaad ahhoz még hozzá kell csapni a kereszteződés utáni első roadelementet!!!
+				Debug.Log("before crossroad calculate call: " + System.DateTime.Now);
+				/*
+				 * 
+				 * crossroad calculation
+				 * 
+				 */
+				GameObject[] addables = { };
         Debug.Log("after crossroad calculate call: " + System.DateTime.Now);
         route.AddRange(addables);
 

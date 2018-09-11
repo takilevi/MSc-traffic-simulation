@@ -27,30 +27,6 @@ public class CrossRoadMeta : MonoBehaviour
 
 	}
 
-	public GameObject[] AddTheseToRoute(GameObject from, GameObject endObject, Vector3 forwardVector)
-	{
-		//1. ki kell találni mi ez a kezdőpont
-		//2. a lehetséges kimenetelekből ki kell választani a LEGKÖZELEBBIT az endObject-hez képest
-		//3. ha megvan a kijárat ki kell számolni, hogy az bal, jobb, vagy egyenes, és kiszámítani
-		List<GameObject> options = GetOptions(from);
-		Debug.Log("megvannak: " + options.Count);
-
-		GameObject theExit = ClosestExitPoint(options, endObject);
-
-		Children.Clear();
-		foreach (Transform child in transform)
-		{
-			if (child.tag == "CrossRoad")
-			{
-				Children.Add(child.gameObject);
-			}
-		}
-		Debug.Log("exit point: " + theExit);
-
-		GameObject[] theRouteElements = GetDirectionObjects(from, theExit, forwardVector);
-
-		return theRouteElements;
-	}
 
 	public List<GameObject> GetOptions(GameObject from)
 	{
@@ -65,67 +41,29 @@ public class CrossRoadMeta : MonoBehaviour
 		return null;
 	}
 
-	GameObject ClosestExitPoint(List<GameObject> options, GameObject endObject)
+
+	public GameObject[] GetDirectionObjects(GameObject from, GameObject exit)
 	{
-		if (options != null)
+		Children.Clear();
+		foreach (Transform item in transform)
 		{
-			float dist = -1F;
-			float distnew;
-			GameObject tobe = null;
-			for (int i = 0; i < options.Count; i++)
-			{
-				if (tobe == null)
-				{
-					dist = Vector3.Distance(endObject.GetComponent<TransformModifier>().Position, options[i].GetComponent<TransformModifier>().Position);
-					tobe = options[i];
-					Debug.Log("init....  " + tobe.name + "    ..  " + dist);
-					continue;
-				}
-
-				distnew = Vector3.Distance(endObject.GetComponent<TransformModifier>().Position, options[i].GetComponent<TransformModifier>().Position);
-
-				if (distnew < dist)
-				{
-					dist = distnew;
-					tobe = options[i];
-				}
-				Debug.Log("....  " + options[i].name + "    ..  " + distnew + ".... " + dist);
-
-			}
-
-			return tobe;
+			Children.Add(item.gameObject);
 		}
 
-		return null;
-
-	}
-
-	GameObject[] GetDirectionObjects(GameObject from, GameObject exit, Vector3 forwardVector)
-	{
-		/*Debug.Log("forward: " + forwardVector);
-    float angleRight = Vector3.SignedAngle(forwardVector, (GameObject.Find("SM_Env_Road_Crossing_11").GetComponent<TransformModifier>().Position - from.GetComponent<TransformModifier>().Position).normalized, Vector3.up);
-    float angleForward = Vector3.SignedAngle(forwardVector, (GameObject.Find("SM_Env_Road_Crossing_13").GetComponent<TransformModifier>().Position - from.GetComponent<TransformModifier>().Position).normalized, Vector3.up);
-    float angleLeft = Vector3.SignedAngle(forwardVector, (GameObject.Find("SM_Env_Road_Crossing_32").GetComponent<TransformModifier>().Position - from.GetComponent<TransformModifier>().Position).normalized, Vector3.up);
-    */
-		float angleExit = Vector3.SignedAngle(forwardVector, (exit.GetComponent<TransformModifier>().Position - from.GetComponent<TransformModifier>().Position).normalized, Vector3.up);
+		float angleExit = Vector3.SignedAngle(from.transform.forward*(-1), exit.transform.forward, Vector3.up);
 		Debug.Log("kanyarodási szög: " + angleExit);
 		GameObject[] theArray;
 		if (angleExit > 40f)
 		{
-			theArray = RightPath(from, forwardVector);
+			theArray = RightPath(from, from.transform.forward * (-1));
 		}
 		else if (angleExit < -40f)
 		{
-			theArray = LeftPath(from, forwardVector);
+			theArray = LeftPath(from, from.transform.forward * (-1));
 		}
 		else
 		{
-			theArray = ForwardPath(from, forwardVector);
-		}
-
-		foreach (var item in theArray)
-		{
-			Debug.Log(item.name);
+			theArray = ForwardPath(from, from.transform.forward * (-1));
 		}
 		return theArray;
 	}
@@ -134,7 +72,7 @@ public class CrossRoadMeta : MonoBehaviour
 	{
 		Vector3 rotatedVectorBy90 = Quaternion.Euler(0, 90, 0) * direction;
 		List<GameObject> rightPath = new List<GameObject>();
-		Vector3 newInitialPoint = roadItem.GetComponent<TransformModifier>().Position;
+		Vector3 newInitialPoint = roadItem.transform.position;
 		Vector3 forward = direction * 5;
 
 		rightPath.Add(roadItem);
@@ -147,7 +85,7 @@ public class CrossRoadMeta : MonoBehaviour
 
 				if (!temp.Equals(rightPath[rightPath.Count - 1]))
 				{
-					newInitialPoint = temp.GetComponent<TransformModifier>().Position;
+					newInitialPoint = temp.transform.position;
 					if (i == 0)
 					{
 						forward = rotatedVectorBy90 * 5;
@@ -170,7 +108,7 @@ public class CrossRoadMeta : MonoBehaviour
 	{
 		Vector3 rotatedVectorBy90 = Quaternion.Euler(0, -90, 0) * direction;
 		List<GameObject> leftPath = new List<GameObject>();
-		Vector3 newInitialPoint = roadItem.GetComponent<TransformModifier>().Position;
+		Vector3 newInitialPoint = roadItem.transform.position;
 		Vector3 forward = direction * 5;
 
 		leftPath.Add(roadItem);
@@ -183,7 +121,7 @@ public class CrossRoadMeta : MonoBehaviour
 
 				if (!temp.Equals(leftPath[leftPath.Count - 1]))
 				{
-					newInitialPoint = temp.GetComponent<TransformModifier>().Position;
+					newInitialPoint = temp.transform.position;
 					if (i == 1)
 					{
 						forward = rotatedVectorBy90 * 5;
@@ -206,7 +144,7 @@ public class CrossRoadMeta : MonoBehaviour
 	private GameObject[] ForwardPath(GameObject roadItem, Vector3 direction)
 	{
 		List<GameObject> forwardPath = new List<GameObject>();
-		Vector3 newInitialPoint = roadItem.GetComponent<TransformModifier>().Position;
+		Vector3 newInitialPoint = roadItem.transform.position;
 		Vector3 forward = direction * 5;
 
 		forwardPath.Add(roadItem);
@@ -220,7 +158,7 @@ public class CrossRoadMeta : MonoBehaviour
 				if (!temp.Equals(forwardPath[forwardPath.Count - 1]))
 				{
 					forwardPath.Add(temp);
-					newInitialPoint = temp.GetComponent<TransformModifier>().Position;
+					newInitialPoint = temp.transform.position;
 				}
 			}
 		}
@@ -237,8 +175,8 @@ public class CrossRoadMeta : MonoBehaviour
 			{
 				theChoosenOne = item;
 			}
-			float dist = Vector3.Distance(possiblePos, theChoosenOne.GetComponent<TransformModifier>().Position);
-			float newDist = Vector3.Distance(possiblePos, item.GetComponent<TransformModifier>().Position);
+			float dist = Vector3.Distance(possiblePos, theChoosenOne.transform.position);
+			float newDist = Vector3.Distance(possiblePos, item.transform.position);
 
 			if (newDist < dist)
 			{
