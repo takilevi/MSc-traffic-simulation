@@ -132,7 +132,6 @@ public class PointHandlerScript : MonoBehaviour
 			if (nextOne.tag == "CrossRoad")
 			{
 				Debug.Log("CrossRoad branch start at: " + System.DateTime.Now);
-				CrossRoadMeta parentMeta = nextOne.GetComponentInParent<CrossRoadMeta>();
 
 				//amit a függvény visszaad ahhoz még hozzá kell csapni a kereszteződés utáni első roadelementet!!!
 				Debug.Log("before crossroad calculate call: " + System.DateTime.Now);

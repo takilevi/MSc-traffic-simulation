@@ -149,19 +149,36 @@ public class CrossRoadMeta : MonoBehaviour
 
 		forwardPath.Add(roadItem);
 
-		for (int i = 0; i < 4; i++)
-		{
-			foreach (var item in Children)
-			{
-				GameObject temp = GetClosestInsideCrossElement(newInitialPoint + forward);
+    if (this.gameObject.name.Contains("Assymetric"))
+    {
+      Debug.Log("assymetric");
+      Vector3 rotatedVectorBy45 = Quaternion.Euler(0, 45, 0) * direction;
+      forward = rotatedVectorBy45 * 7;
 
-				if (!temp.Equals(forwardPath[forwardPath.Count - 1]))
-				{
-					forwardPath.Add(temp);
-					newInitialPoint = temp.transform.position;
-				}
-			}
-		}
+      GameObject temp = GetClosestInsideCrossElement(newInitialPoint + forward);
+
+      if (!temp.Equals(forwardPath[forwardPath.Count - 1]))
+      {
+        forwardPath.Add(temp);
+      }
+    }
+
+    else
+    {
+      for (int i = 0; i < 4; i++)
+      {
+        foreach (var item in Children)
+        {
+          GameObject temp = GetClosestInsideCrossElement(newInitialPoint + forward);
+
+          if (!temp.Equals(forwardPath[forwardPath.Count - 1]))
+          {
+            forwardPath.Add(temp);
+            newInitialPoint = temp.transform.position;
+          }
+        }
+      }
+    }
 
 		return forwardPath.ToArray();
 	}
