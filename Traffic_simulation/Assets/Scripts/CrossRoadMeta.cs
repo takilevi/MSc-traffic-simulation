@@ -51,8 +51,10 @@ public class CrossRoadMeta : MonoBehaviour
 		}
 
 		float angleExit = Vector3.SignedAngle(from.transform.forward*(-1), exit.transform.forward, Vector3.up);
-		Debug.Log("kanyarodási szög: " + angleExit);
-		GameObject[] theArray;
+
+    //Debug.Log("kanyarodási szög: " + angleExit);
+
+    GameObject[] theArray;
 		if (angleExit > 40f)
 		{
 			theArray = RightPath(from, from.transform.forward * (-1));

@@ -73,11 +73,6 @@ public class TweenHelper : MonoBehaviour
   {
     Vector3[] vector3s = PathControlPointGenerator(PathSmoothingAtCurvePoint(path));
 
-    /*foreach (var item in vector3s)
-    {
-      Debug.Log(item);
-    }*/
-
     //Line Draw:
     Vector3 previousPoint = Interp(vector3s, 0);
     Gizmos.color = color;

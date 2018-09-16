@@ -5,6 +5,7 @@ using UnityEngine;
 public class RoadElementModel : PathPoint {
 
   public GameObject previousElement;
+  private Color startcolor;
 
   public GameObject PreviousElement
   {
@@ -19,14 +20,51 @@ public class RoadElementModel : PathPoint {
     set { nextElement = value; }
   }
 
-  void Start () {
-		
-	}
+  private Color highlightColor = Color.green;
+  private Renderer ownRenderer = null;
 
+  public Color[] originalColors;
+  private void Start()
+  {
+    if (ownRenderer == null) { ownRenderer = GetComponentInChildren<Renderer>(); }
+    StoreOriginalColor();
+  }
   // Update is called once per frame
-  void Update () {
+  void Update()
+  {
 
   }
+  private void StoreOriginalColor()
+  {
+    if (ownRenderer != null)
+    {
+      Material[] materials = ownRenderer.materials;
+      originalColors = new Color[materials.Length];
+      for (int i = 0; i < materials.Length; ++i) { originalColors[i] = materials[i].color; }
+    }
+  }
+  private void OnMouseEnter()
+  {
+    Debug.Log("Detected" + ownRenderer);
+    if (ownRenderer != null)
+    {
+      Material[] materials = ownRenderer.materials;
+      for (int i = 0; i < materials.Length; ++i) { materials[i].color = highlightColor; }
+      ownRenderer.materials = materials;
+    }
+  }
+  private void OnMouseExit()
+  {
+    Debug.Log("UNDetected" + ownRenderer);
+    if (ownRenderer != null)
+    {
+      Material[] materials = ownRenderer.materials;
+      for (int i = 0; i < materials.Length; ++i) { materials[i].color = originalColors[i]; }
+      ownRenderer.materials = materials;
+    }
+  }
+
+
 
   override
   public void FindMyNeighbours()

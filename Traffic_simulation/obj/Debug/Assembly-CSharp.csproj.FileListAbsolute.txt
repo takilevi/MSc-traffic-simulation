@@ -323,7 +323,6 @@ D:\GitHub\MSc-traffic-simulation\Traffic_simulation\Temp\bin\Debug\UnityEngine.N
 D:\GitHub\MSc-traffic-simulation\Traffic_simulation\Temp\bin\Debug\UnityEngine.GoogleAudioSpatializer.xml
 D:\GitHub\MSc-traffic-simulation\Traffic_simulation\Temp\bin\Debug\UnityEngine.HoloLens.xml
 D:\GitHub\MSc-traffic-simulation\Traffic_simulation\Temp\bin\Debug\UnityEngine.SpatialTracking.xml
-D:\GitHub\MSc-traffic-simulation\Traffic_simulation\obj\Debug\Assembly-CSharp.csprojResolveAssemblyReference.cache
 D:\GitHub\MSc-traffic-simulation\Traffic_simulation\obj\Debug\Assembly-CSharp.csproj.CoreCompileInputs.cache
 D:\GitHub\MSc-traffic-simulation\Traffic_simulation\obj\Debug\Assembly-CSharp.dll
 D:\GitHub\MSc-traffic-simulation\Traffic_simulation\obj\Debug\Assembly-CSharp.pdb

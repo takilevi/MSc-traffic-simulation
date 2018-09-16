@@ -268,12 +268,14 @@ public class DiscoverNeighbours : MonoBehaviour
 		while (endNotReached)
 		{
 			GameObject nextcross = aStarResult.Dequeue();
-			Debug.Log("nextcross : " + String.Concat(nextcross, nextcross.transform.parent));
+      /*
+      Debug.Log("nextcross : " + String.Concat(nextcross, nextcross.transform.parent));
 
 			Debug.Log("CROSSROUTES :\n " + String.Join("",
 						 new List<GameObject>(calculatedRoute.Last().GetComponentInParent<CrossRoadMeta>().GetDirectionObjects(calculatedRoute.Last(), nextcross))
 						 .ConvertAll(i => String.Concat(i.ToString(), i.transform.parent.ToString(), "\n"))
 						 .ToArray()));
+     */
 
 			calculatedRoute.AddRange(calculatedRoute.Last().GetComponentInParent<CrossRoadMeta>().GetDirectionObjects(calculatedRoute.Last(), nextcross));
 			calculatedRoute = calculatedRoute.Distinct().ToList();
@@ -284,7 +286,6 @@ public class DiscoverNeighbours : MonoBehaviour
                .ToArray()));
                */
 
-			Debug.Log("nullpointer hunting " + String.Concat(calculatedRoute.Last(), calculatedRoute.Last().transform.parent));
 			calculatedRoute.Add(calculatedRoute.Last().GetComponent<CrossRoadModel>().closestRoad);
 
 			bool insideRoads = true;

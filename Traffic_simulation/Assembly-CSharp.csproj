@@ -61,15 +61,14 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\MainCameraController.cs" />
     <Compile Include="Assets\Scripts\CrossRoadMeta.cs" />
     <Compile Include="Assets\Scripts\CrossRoadModel.cs" />
     <Compile Include="Assets\Scripts\DiscoverNeighbours.cs" />
     <Compile Include="Assets\Scripts\ElementTable.cs" />
-    <Compile Include="Assets\Scripts\ManualInitDirection.cs" />
     <Compile Include="Assets\Scripts\PathPoint.cs" />
     <Compile Include="Assets\Scripts\RoadElementModel.cs" />
     <Compile Include="Assets\Scripts\SideWalkPoint.cs" />
-    <Compile Include="Assets\Scripts\TransformModifier.cs" />
     <Compile Include="Assets\Scripts\TweenHelper.cs" />
     <None Include="Assets\PolygonCity\Change_Log.txt" />
     <Reference Include="UnityEditor.StandardEvents">
