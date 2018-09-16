@@ -17,13 +17,27 @@ public class MainCameraController : MonoBehaviour
   float camSens = 0.10f; //How sensitive it with mouse
   private Vector3 lastMouse = new Vector3(255, 255, 255); //kind of in the middle of the screen, rather than at the top (play)
   private float totalRun = 1.0f;
+  bool dragged = false;
 
   void Update()
   {
+
     lastMouse = Input.mousePosition - lastMouse;
     lastMouse = new Vector3(-lastMouse.y * camSens, lastMouse.x * camSens, 0);
     lastMouse = new Vector3(transform.eulerAngles.x + lastMouse.x, transform.eulerAngles.y + lastMouse.y, 0);
-    transform.eulerAngles = lastMouse;
+    if (Input.GetMouseButtonDown(1))
+    {
+      dragged = true;
+    }
+    if (dragged)
+    {
+      transform.eulerAngles = lastMouse;
+      if (Input.GetMouseButtonUp(1))
+      {
+        dragged = false;
+      }
+    }
+
     lastMouse = Input.mousePosition;
     //Mouse  camera angle done.  
 
@@ -56,6 +70,23 @@ public class MainCameraController : MonoBehaviour
     else
     {
       transform.Translate(p);
+    }
+
+    float ScrollWheelChange = Input.GetAxis("Mouse ScrollWheel");           //This little peece of code is written by JelleWho https://github.com/jellewie
+    if (ScrollWheelChange != 0)
+    {                                            //If the scrollwheel has changed
+      float R = ScrollWheelChange * 15;                                   //The radius from current camera
+      float PosX = this.transform.eulerAngles.x + 90;              //Get up and down
+      float PosY = -1 * (this.transform.eulerAngles.y - 90);       //Get left to right
+      PosX = PosX / 180 * Mathf.PI;                                       //Convert from degrees to radians
+      PosY = PosY / 180 * Mathf.PI;                                       //^
+      float X = R * Mathf.Sin(PosX) * Mathf.Cos(PosY);                    //Calculate new coords
+      float Z = R * Mathf.Sin(PosX) * Mathf.Sin(PosY);                    //^
+      float Y = R * Mathf.Cos(PosX);                                      //^
+      float CamX = this.transform.position.x;                      //Get current camera postition for the offset
+      float CamY = this.transform.position.y;                      //^
+      float CamZ = this.transform.position.z;                      //^
+      this.transform.position = new Vector3(CamX + X, CamY + Y, CamZ + Z);//Move the main camera
     }
 
   }
