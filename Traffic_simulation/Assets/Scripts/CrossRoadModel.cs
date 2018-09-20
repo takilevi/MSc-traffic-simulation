@@ -12,9 +12,25 @@ public class CrossRoadModel : PathPoint
 		set { closestRoad = value; }
 	}
 
-	public float G = float.PositiveInfinity;
-	public float H = float.PositiveInfinity;
-	public float F = float.PositiveInfinity;
+	[System.Serializable]
+	public class AStarCalc
+	{
+		public GameObject from;
+		public float G = float.PositiveInfinity;
+		public float H = float.PositiveInfinity;
+		public float F = float.PositiveInfinity;
+
+		public AStarCalc(GameObject from, float g, float h, float f)
+		{
+			this.from = from;
+			G = g;
+			H = h;
+			F = f;
+		}
+	}
+	public List<AStarCalc> aStarValues = new List<AStarCalc>();
+
+
 	public GameObject canConnectToFromExit;
 
 	// Use this for initialization
@@ -26,7 +42,10 @@ public class CrossRoadModel : PathPoint
 	// Update is called once per frame
 	void Update()
 	{
-		F = G + H;
+		foreach (var item in aStarValues)
+		{
+			item.F = item.G + item.H;
+		}
 	}
 
 	override
@@ -69,13 +88,27 @@ public class CrossRoadModel : PathPoint
 		}
 	}
 
-	public void CalculateGValue()
+	public void CalculateGValue( GameObject from )
 	{
 		GameObject prev = closestRoad;
-		G = 0;
+		AStarCalc contains = null;
+		foreach (var item in aStarValues)
+		{
+			if(GameObject.ReferenceEquals(item.from, from))
+			{
+				contains = item;
+			}
+		}
+		if(contains == null)
+		{
+			contains = new AStarCalc(from, float.PositiveInfinity, float.PositiveInfinity, float.PositiveInfinity);
+			aStarValues.Add(contains);
+		}
+
+		contains.G = 0;
 		while (prev.GetComponent<RoadElementModel>() != null)
 		{
-			G++;
+			contains.G++;
 
 			prev = prev.GetComponent<RoadElementModel>().previousElement;
 		}
@@ -83,10 +116,49 @@ public class CrossRoadModel : PathPoint
 		prev.GetComponent<CrossRoadModel>().canConnectToFromExit = this.gameObject;
 	}
 
-	public void CalculateHValue( GameObject to)
+	public void CalculateHValue( GameObject from, GameObject to)
 	{
+		AStarCalc contains = null;
+		foreach (var item in aStarValues)
+		{
+			if (GameObject.ReferenceEquals(item.from, from))
+			{
+				contains = item;
+			}
+		}
+		if (contains == null)
+		{
+			contains = new AStarCalc(from, float.PositiveInfinity, float.PositiveInfinity, float.PositiveInfinity);
+			aStarValues.Add(contains);
+		}
+
 		//Egy ilyen csempe 5 hosszú ezért osztok öttel hogy a G-vel ugyanolyan súlyúak legyenek, így lesz valid a számolás
-		H = Vector3.Distance(transform.position, to.transform.position) / 5;
+
+		contains.H = Vector3.Distance(transform.position, to.transform.position) / 5;
 		//Debug.Log(transform.position + " ---- " + to.transform.position + " ---- " + H + " ---- " + transform.parent.name);
+	}
+
+	public float GetH( GameObject from)
+	{
+		foreach (var item in aStarValues)
+		{
+			if (GameObject.ReferenceEquals(item.from, from))
+			{
+				return item.H;
+			}
+		}
+		return float.PositiveInfinity;
+	}
+
+	public float GetG(GameObject from)
+	{
+		foreach (var item in aStarValues)
+		{
+			if (GameObject.ReferenceEquals(item.from, from))
+			{
+				return item.G;
+			}
+		}
+		return float.PositiveInfinity;
 	}
 }

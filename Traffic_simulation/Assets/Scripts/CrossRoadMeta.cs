@@ -221,23 +221,32 @@ public class CrossRoadMeta : MonoBehaviour
 		return entrances;
 	}
 
-	public void CallGCalculationOnFromElements()
+	public void CallGCalculationOnFromElements( GameObject from)
 	{
 		foreach (var item in roadGroup)
 		{
-			item.from.GetComponent<CrossRoadModel>().CalculateGValue();
+			item.from.GetComponent<CrossRoadModel>().CalculateGValue(from);
 		}
 	}
 
-	public void CallHCalculationOnExitElements(GameObject to)
+	public void CallHCalculationOnExitElements( GameObject from, GameObject to)
 	{
 		foreach (var item in roadGroup)
 		{
 			foreach (var option in item.options)
 			{
-				if (option.GetComponent<CrossRoadModel>().H.Equals(float.PositiveInfinity))
+				CrossRoadModel.AStarCalc calcFrom = null;
+				foreach (var calc in option.GetComponent<CrossRoadModel>().aStarValues)
 				{
-					option.GetComponent<CrossRoadModel>().CalculateHValue(to);
+					if(GameObject.ReferenceEquals(calc.from, from))
+					{
+						calcFrom = calc;
+					}
+				}
+				
+				if (calcFrom == null || calcFrom.H.Equals(float.PositiveInfinity))
+				{
+					option.GetComponent<CrossRoadModel>().CalculateHValue(from,to);
 				}
 			}
 		}

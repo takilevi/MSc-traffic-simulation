@@ -86,7 +86,7 @@ public class DiscoverNeighbours : MonoBehaviour
     }
 		*/
 
-		
+
 		FindShortestPath(from, to);
 	}
 
@@ -111,8 +111,8 @@ public class DiscoverNeighbours : MonoBehaviour
 		{
 			//A* -hoz szükséges számítások
 			//csúcspontok súlyozása G-H-F értékek
-			item.CallGCalculationOnFromElements();
-			item.CallHCalculationOnExitElements(to);
+			item.CallGCalculationOnFromElements(this.gameObject);
+			item.CallHCalculationOnExitElements(this.gameObject, to);
 		}
 
 		calculatedRoute.Add(from);
@@ -137,7 +137,7 @@ public class DiscoverNeighbours : MonoBehaviour
 
 				foreach (var item in exitsFromStart)
 				{
-					openList.Enqueue(new AStarNode(item, null, calculatedRoute.Count + item.GetComponent<CrossRoadModel>().H));
+					openList.Enqueue(new AStarNode(item, null, calculatedRoute.Count + item.GetComponent<CrossRoadModel>().GetH(this.gameObject)));
 					openList = new Queue<AStarNode>(openList.OrderBy(x => x.F));
 				}
 
@@ -191,7 +191,8 @@ public class DiscoverNeighbours : MonoBehaviour
 			List<AStarNode> adjacentAStarNodes = new List<AStarNode>();
 			foreach (var item in adjacentExits)
 			{
-				adjacentAStarNodes.Add(new AStarNode(item, closedList.ToList().Last(), closedList.ToList().Last().F + adjacentEntrance.GetComponent<CrossRoadModel>().G + item.GetComponent<CrossRoadModel>().H));
+				adjacentAStarNodes.Add(new AStarNode(item, closedList.ToList().Last(), closedList.ToList().Last().F + adjacentEntrance.GetComponent<CrossRoadModel>().GetG(this.gameObject) 
+					+ item.GetComponent<CrossRoadModel>().GetH(this.gameObject)));
 			}
 
 			foreach (var aSquare in adjacentAStarNodes)
@@ -268,7 +269,7 @@ public class DiscoverNeighbours : MonoBehaviour
 		while (endNotReached)
 		{
 			GameObject nextcross = aStarResult.Dequeue();
-      /*
+			/*
       Debug.Log("nextcross : " + String.Concat(nextcross, nextcross.transform.parent));
 
 			Debug.Log("CROSSROUTES :\n " + String.Join("",
