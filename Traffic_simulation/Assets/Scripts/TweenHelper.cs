@@ -12,7 +12,7 @@ public class TweenHelper : MonoBehaviour
 
   public float speed = 250.0F;
   private GameObject targetObject;
-  private int pathIndex = 1;
+  private int pathIndex;
   private float reachDist = 1f;
   private bool moving;
 
@@ -20,8 +20,9 @@ public class TweenHelper : MonoBehaviour
   void Start()
   {
     targetObject = this.gameObject;
+		pathIndex = 1;
 
-    if (test.Length > 0)
+		if (test.Length > 0)
     {
 
       // targetObject.transform.position = test[0].position;
@@ -50,12 +51,43 @@ public class TweenHelper : MonoBehaviour
 
       if (pathIndex >= pathPointsCatMull.Length)
       {
+				Debug.Log("arrive to destination, i hope you travel well, please recommend our system to your loved ones");
         moving = false;
-      }
+				GameObject arriveTo = test[test.Length - 1];
+				this.GetComponent<TweenHelper>().test = new GameObject[0];
+				this.GetComponent<TweenHelper>().testV3 = new Vector3[0];
+
+				this.gameObject.GetComponent<DiscoverNeighbours>().calculatedRoute.Clear();
+
+				this.gameObject.GetComponent<DiscoverNeighbours>().openList.Clear();
+				this.gameObject.GetComponent<DiscoverNeighbours>().closedList.Clear();
+				this.gameObject.GetComponent<DiscoverNeighbours>().aStarResult.Clear();
+
+				if (GameObject.ReferenceEquals(arriveTo, this.gameObject.GetComponent<DiscoverNeighbours>().to))
+				{
+					this.gameObject.GetComponent<DiscoverNeighbours>().FindShortestPath(this.gameObject.GetComponent<DiscoverNeighbours>().to, this.gameObject.GetComponent<DiscoverNeighbours>().from);
+					StartCoroutine(PathReCalculateWait());
+				}
+				else
+				{
+					this.gameObject.GetComponent<DiscoverNeighbours>().FindShortestPath(this.gameObject.GetComponent<DiscoverNeighbours>().from, this.gameObject.GetComponent<DiscoverNeighbours>().to);
+					StartCoroutine(PathReCalculateWait());
+				}
+				
+
+			}
     }
     else if (pathPointsCatMull == null || pathPointsCatMull.Length <= 0) { Start(); }
   }
-  private void OnDrawGizmos()
+
+	IEnumerator PathReCalculateWait()
+	{
+		Debug.Log("Waiting for filling...");
+		yield return new WaitUntil(() => test.Length > 0);
+		pathPointsCatMull = new Vector3[0];
+		Debug.Log("Filled.");
+	}
+	private void OnDrawGizmos()
   {
     if (test.Length > 0)
     {

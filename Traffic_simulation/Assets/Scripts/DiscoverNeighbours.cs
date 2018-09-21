@@ -12,7 +12,6 @@ public class DiscoverNeighbours : MonoBehaviour
 	public GameObject[] allRoadGameObject;
 	public GameObject[] allCrossRoadGameObject;
 	public CrossRoadMeta[] crossMetaObject;
-	List<GameObject> allRoad;
 
 	public List<GameObject> calculatedRoute;
 	public GameObject fromCar;
@@ -105,7 +104,7 @@ public class DiscoverNeighbours : MonoBehaviour
 		}
 	}
 
-	void FindShortestPath(GameObject from, GameObject to)
+	public void FindShortestPath(GameObject from, GameObject to)
 	{
 		foreach (var item in crossMetaObject)
 		{
@@ -281,11 +280,11 @@ public class DiscoverNeighbours : MonoBehaviour
 			calculatedRoute.AddRange(calculatedRoute.Last().GetComponentInParent<CrossRoadMeta>().GetDirectionObjects(calculatedRoute.Last(), nextcross));
 			calculatedRoute = calculatedRoute.Distinct().ToList();
 
-			/*Debug.Log("útvonal DISTINCT :\n " + String.Join("",
+			Debug.Log("útvonal DISTINCT :\n " + String.Join("",
                new List<GameObject>(calculatedRoute)
                .ConvertAll(i => String.Concat(i.ToString(), i.transform.parent.ToString(), "\n"))
                .ToArray()));
-               */
+               
 
 			calculatedRoute.Add(calculatedRoute.Last().GetComponent<CrossRoadModel>().closestRoad);
 
