@@ -42,6 +42,10 @@ public class DiscoverNeighbours : MonoBehaviour
 		this.GetComponent<TweenHelper>().testV3 = null;
 
 		calculatedRoute = new List<GameObject>();
+		openList = new Queue<AStarNode>();
+		closedList = new Queue<AStarNode>();
+		aStarResult = new Queue<GameObject>();
+
 		fromCar = this.gameObject;
 		from = ElementTable.GetClosestElement(fromCar.transform.position);
 		to = ElementTable.GetClosestElement(toPopcorn.transform.position);
@@ -49,41 +53,10 @@ public class DiscoverNeighbours : MonoBehaviour
 
 		if (toPopcorn == null) { toPopcorn = fromCar; }
 
-		/*
-		allRoadGameObject = GameObject.FindGameObjectsWithTag("RoadModel");
-    allCrossRoadGameObject = GameObject.FindGameObjectsWithTag("CrossRoad");
-    allRoad = new List<GameObject>();
-    allRoad.AddRange(allRoadGameObject);
-    allRoad.AddRange(allCrossRoadGameObject);
-		*/
-
-		openList = new Queue<AStarNode>();
-		closedList = new Queue<AStarNode>();
-		aStarResult = new Queue<GameObject>();
-
+		
 		crossMetaObject = GameObject.FindObjectsOfType<CrossRoadMeta>();
 
 		StartDiscover(discoverStartObj);
-
-		/*
-
-    foreach (var item in allRoadGameObject)
-    {
-      RoadElementModel element = item.GetComponent<RoadElementModel>();
-      if (element.NextElement == null || element.PreviousElement == null)
-      {
-        Debug.Log("VAN MÉG NULLOS!! " + item.name + "...." + item.transform.parent.name);
-      }
-    }
-    foreach (var item in allCrossRoadGameObject)
-    {
-      CrossRoadModel element = item.GetComponent<CrossRoadModel>();
-      if (element.ClosestRoad == null)
-      {
-        Debug.Log("VAN MÉG NULLOS!! " + item.name + "...." + item.transform.parent.name);
-      }
-    }
-		*/
 
 
 		FindShortestPath(from, to);
@@ -268,22 +241,17 @@ public class DiscoverNeighbours : MonoBehaviour
 		while (endNotReached)
 		{
 			GameObject nextcross = aStarResult.Dequeue();
-			/*
-      Debug.Log("nextcross : " + String.Concat(nextcross, nextcross.transform.parent));
 
-			Debug.Log("CROSSROUTES :\n " + String.Join("",
-						 new List<GameObject>(calculatedRoute.Last().GetComponentInParent<CrossRoadMeta>().GetDirectionObjects(calculatedRoute.Last(), nextcross))
-						 .ConvertAll(i => String.Concat(i.ToString(), i.transform.parent.ToString(), "\n"))
-						 .ToArray()));
-     */
 
 			calculatedRoute.AddRange(calculatedRoute.Last().GetComponentInParent<CrossRoadMeta>().GetDirectionObjects(calculatedRoute.Last(), nextcross));
 			calculatedRoute = calculatedRoute.Distinct().ToList();
 
+			/*
 			Debug.Log("útvonal DISTINCT :\n " + String.Join("",
                new List<GameObject>(calculatedRoute)
                .ConvertAll(i => String.Concat(i.ToString(), i.transform.parent.ToString(), "\n"))
                .ToArray()));
+			*/
                
 
 			calculatedRoute.Add(calculatedRoute.Last().GetComponent<CrossRoadModel>().closestRoad);
