@@ -65,6 +65,7 @@
     <Compile Include="Assets\Scripts\CrossRoadModel.cs" />
     <Compile Include="Assets\Scripts\DiscoverNeighbours.cs" />
     <Compile Include="Assets\Scripts\ElementTable.cs" />
+    <Compile Include="Assets\Scripts\InventoryUI.cs" />
     <Compile Include="Assets\Scripts\MainCameraController.cs" />
     <Compile Include="Assets\Scripts\PathPoint.cs" />
     <Compile Include="Assets\Scripts\RoadElementModel.cs" />

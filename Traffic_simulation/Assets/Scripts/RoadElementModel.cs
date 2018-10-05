@@ -45,7 +45,7 @@ public class RoadElementModel : PathPoint {
   }
   private void OnMouseEnter()
   {
-    Debug.Log("Detected" + ownRenderer);
+    //Debug.Log("Detected" + ownRenderer);
     if (ownRenderer != null)
     {
       Material[] materials = ownRenderer.materials;
@@ -55,7 +55,7 @@ public class RoadElementModel : PathPoint {
   }
   private void OnMouseExit()
   {
-    Debug.Log("UNDetected" + ownRenderer);
+    //Debug.Log("UNDetected" + ownRenderer);
     if (ownRenderer != null)
     {
       Material[] materials = ownRenderer.materials;
@@ -64,9 +64,14 @@ public class RoadElementModel : PathPoint {
     }
   }
 
+	private void OnMouseDown()
+	{
+		Debug.Log("Selected road element: " + this.gameObject.name+" ------ "+this.transform.parent.name);
+	}
 
 
-  override
+
+	override
   public void FindMyNeighbours()
   {
     if(nextElement == null)
