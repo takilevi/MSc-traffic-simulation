@@ -89,7 +89,7 @@ public class TweenHelper : MonoBehaviour
 	}
 	private void OnDrawGizmos()
   {
-    if (test.Length > 0)
+    if (test != null && test.Length > 0)
     {
       Vector3[] suppliedLine = new Vector3[test.Length];
       for (int i = 0; i < test.Length; i++)

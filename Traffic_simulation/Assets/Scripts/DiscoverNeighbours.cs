@@ -7,17 +7,14 @@ using UnityEngine;
 [ExecuteInEditMode]
 public class DiscoverNeighbours : MonoBehaviour
 {
-	public GameObject discoverStartObj;
 
 	public GameObject[] allRoadGameObject;
 	public GameObject[] allCrossRoadGameObject;
 	public CrossRoadMeta[] crossMetaObject;
 
 	public List<GameObject> calculatedRoute;
-	public GameObject fromCar;
-	public GameObject toPopcorn;
-	public GameObject from;
-	public GameObject to;
+  public GameObject from;
+  public GameObject to;
 
 	public class AStarNode
 	{
@@ -38,7 +35,9 @@ public class DiscoverNeighbours : MonoBehaviour
 
 	void Awake()
 	{
-		this.GetComponent<TweenHelper>().test = null;
+    ElementTable.Setup();
+
+    this.GetComponent<TweenHelper>().test = null;
 		this.GetComponent<TweenHelper>().testV3 = null;
 
 		calculatedRoute = new List<GameObject>();
@@ -46,38 +45,30 @@ public class DiscoverNeighbours : MonoBehaviour
 		closedList = new Queue<AStarNode>();
 		aStarResult = new Queue<GameObject>();
 
-		fromCar = this.gameObject;
-		from = ElementTable.GetClosestElement(fromCar.transform.position);
-		to = ElementTable.GetClosestElement(toPopcorn.transform.position);
-		discoverStartObj = from.transform.parent.gameObject;
-
-		if (toPopcorn == null) { toPopcorn = fromCar; }
-
+		from = ElementTable.GetRandomRoadElement();
+		to = ElementTable.GetRandomRoadElement();
 		
 		crossMetaObject = GameObject.FindObjectsOfType<CrossRoadMeta>();
 
-		StartDiscover(discoverStartObj);
-
-
+    PlaceCarToStartingPoint(from);
 		FindShortestPath(from, to);
 	}
 
-	// Update is called once per frame
-	void Update()
+ 
+
+  // Update is called once per frame
+  void Update()
 	{
 
 	}
 
+  private void PlaceCarToStartingPoint(GameObject from)
+  {
+    this.gameObject.transform.position = from.transform.position;
+    this.gameObject.transform.rotation = Quaternion.LookRotation(from.transform.forward);
+  }
 
-	void StartDiscover(GameObject startObj)
-	{
-		foreach (Transform child in startObj.transform)
-		{
-			child.gameObject.GetComponent<RoadElementModel>().FindMyNeighbours();
-		}
-	}
-
-	public void FindShortestPath(GameObject from, GameObject to)
+  public void FindShortestPath(GameObject from, GameObject to)
 	{
 		foreach (var item in crossMetaObject)
 		{
