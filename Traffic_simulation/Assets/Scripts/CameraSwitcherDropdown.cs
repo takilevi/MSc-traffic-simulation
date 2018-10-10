@@ -7,7 +7,7 @@ public class CameraSwitcherDropdown : MonoBehaviour
 {
   Dropdown mDropdown;
   int mDropdownValue = 0;
-  List<GameObject> gameCameras;
+	List<GameObject> gameCameras;
 
   void Start()
   {
@@ -26,8 +26,10 @@ public class CameraSwitcherDropdown : MonoBehaviour
     {
       mDropdown.options.Add(new Dropdown.OptionData(item.name));
     }
-    
-    Debug.Log("Starting Dropdown Value : " + mDropdown.value);
+
+		mDropdown.RefreshShownValue();
+
+		Debug.Log("Starting Dropdown Value : " + mDropdown.value);
   }
 
   private void DropdownValueChanged(Dropdown change)
