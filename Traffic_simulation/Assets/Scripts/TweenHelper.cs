@@ -10,7 +10,7 @@ public class TweenHelper : MonoBehaviour
   private Vector3[] pathPointsCatMull;
   public Color mainPathColor;
 
-  public float speed = 250.0F;
+  public float speed;
   private GameObject targetObject;
   private int pathIndex;
   private float reachDist = 1f;
@@ -44,7 +44,7 @@ public class TweenHelper : MonoBehaviour
 
       this.transform.LookAt(pathPointsCatMull[pathIndex]);
 
-      transform.position = Vector3.Lerp(transform.position, pathPointsCatMull[pathIndex], Time.deltaTime * 10 * speed);
+      transform.position = Vector3.Lerp(transform.position, pathPointsCatMull[pathIndex], Time.deltaTime * speed);
 
       if (dist <= reachDist)
       { pathIndex++; }

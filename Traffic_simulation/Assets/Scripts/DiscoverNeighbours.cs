@@ -45,8 +45,8 @@ public class DiscoverNeighbours : MonoBehaviour
 		closedList = new Queue<AStarNode>();
 		aStarResult = new Queue<GameObject>();
 
-		from = ElementTable.GetRandomRoadElement();
-		to = ElementTable.GetRandomRoadElement();
+    //from = ElementTable.GetRandomRoadElement();
+		//to = ElementTable.GetRandomRoadElement();
 		
 		crossMetaObject = GameObject.FindObjectsOfType<CrossRoadMeta>();
 

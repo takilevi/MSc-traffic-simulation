@@ -15,16 +15,27 @@ public class CrossRoadMeta : MonoBehaviour
 
 	public List<GameObject> Children;
 
+  public GameObject locker = null;
+
+  public Queue<GameObject> waitRow;
+
+
 	// Use this for initialization
 	void Start()
 	{
-
-	}
+    waitRow = new Queue<GameObject>();
+    locker = null;
+  }
 
 	// Update is called once per frame
 	void Update()
 	{
-
+    if(locker == null && waitRow.Count != 0)
+    {
+      GameObject goForward = waitRow.Dequeue();
+      goForward.GetComponent<TweenHelper>().speed = 10;
+      locker = goForward;
+    }
 	}
 
 
@@ -251,4 +262,50 @@ public class CrossRoadMeta : MonoBehaviour
 			}
 		}
 	}
+
+  public void TriggerHandler(Collider other, GameObject road)
+  {
+    if (locker != null && !GameObject.ReferenceEquals(locker,other.gameObject))
+    {
+      other.gameObject.GetComponent<TweenHelper>().speed = 0;
+      waitRow.Enqueue(other.gameObject);
+
+      //StartCoroutine(WaitForMyStep(other));
+    }
+    if(locker == null)
+    {
+      foreach (var item in roadGroup)
+      {
+        if (GameObject.ReferenceEquals(item.from, road))
+        {
+          //bejáraton jött egy autó
+          Debug.Log("bejáraton jött ");
+          locker = other.gameObject;
+        }
+      }
+    }
+    if (GameObject.ReferenceEquals(locker, other.gameObject))
+    {
+      foreach (var item in roadGroup)
+      {
+        if (item.options.Contains(road))
+        {
+          //kimegy a kijáraton a lockoló autó
+          Debug.Log("kijáraton távozik ");
+          locker = null;
+        }
+      }
+    }
+    
+  }
+
+  IEnumerator WaitForMyStep(Collider other)
+  {
+    Debug.Log("Waiting for restart...");
+    yield return new WaitUntil(() => locker != null);
+    other.gameObject.GetComponent<TweenHelper>().speed = Random.Range(10000, 20000);
+    Debug.Log("Restarted.");
+  }
+
+
 }

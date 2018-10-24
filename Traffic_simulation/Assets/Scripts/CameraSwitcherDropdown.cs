@@ -6,7 +6,6 @@ using UnityEngine.UI;
 public class CameraSwitcherDropdown : MonoBehaviour
 {
   Dropdown mDropdown;
-  int mDropdownValue = 0;
 	List<GameObject> gameCameras;
 
   void Start()

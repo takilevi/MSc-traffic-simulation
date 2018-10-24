@@ -161,4 +161,21 @@ public class CrossRoadModel : PathPoint
 		}
 		return float.PositiveInfinity;
 	}
+
+  private void OnTriggerEnter(Collider other)
+  {
+    Debug.Log(string.Format("ütközött velem ({0}) ez az objektum: {1} , a sebessége: {2}",this.name, other.gameObject.name, other.gameObject.GetComponent<TweenHelper>().speed));
+    this.GetComponentInParent<CrossRoadMeta>().TriggerHandler(other, this.gameObject);
+
+
+    //StartCoroutine(WaitSome(other));
+  }
+
+  IEnumerator WaitSome(Collider other)
+  {
+    Debug.Log("Waiting for restart...");
+    yield return new WaitForSeconds(Random.Range(3,7));
+    other.gameObject.GetComponent<TweenHelper>().speed = Random.Range(10000, 20000);
+    Debug.Log("Restarted.");
+  }
 }
