@@ -88,7 +88,7 @@ public class DiscoverNeighbours : MonoBehaviour
 
 			if (GameObject.ReferenceEquals(nextElement, to))
 			{
-				Debug.Log("megvagyunk");
+				//Debug.Log("megvagyunk");
 				calculatedRoute.Add(nextElement);
 				return;
 			}
@@ -132,10 +132,12 @@ public class DiscoverNeighbours : MonoBehaviour
 		//megvannak a CÉL legközelebbi entrance pontjai
 		//innen kezdődik maga az algoritmus
 
-		Debug.Log("Open list :\n " + String.Join("",
+		/*
+     * Debug.Log("Open list :\n " + String.Join("",
 						 new List<AStarNode>(openList)
 						 .ConvertAll(i => String.Concat(i.node.ToString(), i.node.transform.parent.ToString(), "\t", i.F, "\n"))
 						 .ToArray()));
+     */
 
 
 		do
@@ -144,7 +146,7 @@ public class DiscoverNeighbours : MonoBehaviour
 			if (GameObject.ReferenceEquals(prevUntilClosestCross, closedList.ToList().Last().node))
 			{
 				//path found
-				Debug.Log("Found the exit point, from where we will reach the end object");
+				//Debug.Log("Found the exit point, from where we will reach the end object");
 
 				break;
 			}
@@ -194,8 +196,8 @@ public class DiscoverNeighbours : MonoBehaviour
 					//Debug.Log("oldF: " + oldF + " ------ newF: " + newF);
 					if (newF < oldF)
 					{
-						Debug.Log("oldF: " + oldF + " ------ newF: " + newF + "   -----whoami- " + String.Concat(oldOpen.node.name, oldOpen.node.transform.parent.name));
-						Debug.Log("bejöttünk a newF kisebb oldF ágba ---- oldparent : " + oldOpen.parent.node.name + " ----  " + oldOpen.parent.node.transform.parent + "   --- newparent: " + closedList.ToList().Last().node + "  -----  " + closedList.ToList().Last().node.transform.parent);
+						//Debug.Log("oldF: " + oldF + " ------ newF: " + newF + "   -----whoami- " + String.Concat(oldOpen.node.name, oldOpen.node.transform.parent.name));
+						//Debug.Log("bejöttünk a newF kisebb oldF ágba ---- oldparent : " + oldOpen.parent.node.name + " ----  " + oldOpen.parent.node.transform.parent + "   --- newparent: " + closedList.ToList().Last().node + "  -----  " + closedList.ToList().Last().node.transform.parent);
 						oldOpen.F = newF;
 						oldOpen.parent = closedList.ToList().Last();
 					}
@@ -222,11 +224,12 @@ public class DiscoverNeighbours : MonoBehaviour
 
 		aStarResult = new Queue<GameObject>(aStarResult.Reverse());
 
-		Debug.Log("REVERSE A* pathfinding result :\n " + String.Join("",
+    /*
+    Debug.Log("REVERSE A* pathfinding result :\n " + String.Join("",
 						 new List<GameObject>(aStarResult)
 						 .ConvertAll(i => String.Concat(i.ToString(), i.transform.parent.ToString(), "\n"))
 						 .ToArray()));
-
+    */
 
 		bool endNotReached = true;
 		while (endNotReached)

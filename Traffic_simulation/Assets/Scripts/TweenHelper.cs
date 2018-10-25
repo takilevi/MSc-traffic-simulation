@@ -40,7 +40,7 @@ public class TweenHelper : MonoBehaviour
     if (moving && pathPointsCatMull.Length > 0)
     {
       float dist = Vector3.Distance(pathPointsCatMull[pathIndex], transform.position);
-      Debug.Log("catmull count: " + pathPointsCatMull.Length);
+      //Debug.Log("catmull count: " + pathPointsCatMull.Length);
 
       this.transform.LookAt(pathPointsCatMull[pathIndex]);
 
@@ -51,7 +51,7 @@ public class TweenHelper : MonoBehaviour
 
       if (pathIndex >= pathPointsCatMull.Length)
       {
-				Debug.Log("arrive to destination, i hope you travel well, please recommend our system to your loved ones");
+				//Debug.Log("arrive to destination, i hope you travel well, please recommend our system to your loved ones");
         moving = false;
 				GameObject arriveTo = test[test.Length - 1];
 				this.GetComponent<TweenHelper>().test = new GameObject[0];
@@ -82,10 +82,10 @@ public class TweenHelper : MonoBehaviour
 
 	IEnumerator PathReCalculateWait()
 	{
-		Debug.Log("Waiting for filling...");
+		//Debug.Log("Waiting for filling...");
 		yield return new WaitUntil(() => test.Length > 0);
 		pathPointsCatMull = new Vector3[0];
-		Debug.Log("Filled.");
+		//Debug.Log("Filled.");
 	}
 	private void OnDrawGizmos()
   {

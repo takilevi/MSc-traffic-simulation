@@ -28,7 +28,7 @@ public class CameraSwitcherDropdown : MonoBehaviour
 
 		mDropdown.RefreshShownValue();
 
-		Debug.Log("Starting Dropdown Value : " + mDropdown.value);
+		//Debug.Log("Starting Dropdown Value : " + mDropdown.value);
   }
 
   private void DropdownValueChanged(Dropdown change)

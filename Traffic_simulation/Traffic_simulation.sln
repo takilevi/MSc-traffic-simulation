@@ -1,7 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp", "Assembly-CSharp.csproj", "{316014C0-F49B-9A99-2D59-BF4761FC707F}"
+# Visual Studio 2017
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Traffic_simulation", "Traffic_simulation.csproj", "{AD7FDA8E-CBDD-5C17-B237-5B6B03189141}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Traffic_simulation", "Traffic_simulation.csproj", "{AD7FDA8E-CBDD-5C17-B237-5B6B03189141}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Traffic_simulation.Editor", "Traffic_simulation.Editor.csproj", "{FC6A2CB2-64C4-1FB6-384B-E8447A62E953}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Traffic_simulation.Editor", "Traffic_simulation.Editor.csproj", "{FC6A2CB2-64C4-1FB6-384B-E8447A62E953}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Traffic_simulation.Editor", "Traffic_simulation.Editor.csproj", "{FC6A2CB2-64C4-1FB6-384B-E8447A62E953}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -9,10 +17,26 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{316014C0-F49B-9A99-2D59-BF4761FC707F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{316014C0-F49B-9A99-2D59-BF4761FC707F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{316014C0-F49B-9A99-2D59-BF4761FC707F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{316014C0-F49B-9A99-2D59-BF4761FC707F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AD7FDA8E-CBDD-5C17-B237-5B6B03189141}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AD7FDA8E-CBDD-5C17-B237-5B6B03189141}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AD7FDA8E-CBDD-5C17-B237-5B6B03189141}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AD7FDA8E-CBDD-5C17-B237-5B6B03189141}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AD7FDA8E-CBDD-5C17-B237-5B6B03189141}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AD7FDA8E-CBDD-5C17-B237-5B6B03189141}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AD7FDA8E-CBDD-5C17-B237-5B6B03189141}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AD7FDA8E-CBDD-5C17-B237-5B6B03189141}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FC6A2CB2-64C4-1FB6-384B-E8447A62E953}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FC6A2CB2-64C4-1FB6-384B-E8447A62E953}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FC6A2CB2-64C4-1FB6-384B-E8447A62E953}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FC6A2CB2-64C4-1FB6-384B-E8447A62E953}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FC6A2CB2-64C4-1FB6-384B-E8447A62E953}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FC6A2CB2-64C4-1FB6-384B-E8447A62E953}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FC6A2CB2-64C4-1FB6-384B-E8447A62E953}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FC6A2CB2-64C4-1FB6-384B-E8447A62E953}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FC6A2CB2-64C4-1FB6-384B-E8447A62E953}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FC6A2CB2-64C4-1FB6-384B-E8447A62E953}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FC6A2CB2-64C4-1FB6-384B-E8447A62E953}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FC6A2CB2-64C4-1FB6-384B-E8447A62E953}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

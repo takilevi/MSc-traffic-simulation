@@ -66,7 +66,7 @@ public class RoadElementModel : PathPoint {
 
 	private void OnMouseDown()
 	{
-		Debug.Log("Selected road element: " + this.gameObject.name+" ------ "+this.transform.parent.name);
+		//Debug.Log("Selected road element: " + this.gameObject.name+" ------ "+this.transform.parent.name);
 	}
 
 
