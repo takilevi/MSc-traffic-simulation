@@ -269,8 +269,6 @@ public class CrossRoadMeta : MonoBehaviour
     {
       other.gameObject.GetComponent<TweenHelper>().speed = 0;
       waitRow.Enqueue(other.gameObject);
-
-      //StartCoroutine(WaitForMyStep(other));
     }
     if(locker == null)
     {
@@ -284,28 +282,23 @@ public class CrossRoadMeta : MonoBehaviour
         }
       }
     }
-    if (GameObject.ReferenceEquals(locker, other.gameObject))
-    {
-      foreach (var item in roadGroup)
-      {
-        if (item.options.Contains(road))
-        {
-          //kimegy a kijáraton a lockoló autó
-          Debug.Log("kijáraton távozik ");
-          locker = null;
-        }
-      }
-    }
-    
   }
 
-  IEnumerator WaitForMyStep(Collider other)
-  {
-    Debug.Log("Waiting for restart...");
-    yield return new WaitUntil(() => locker != null);
-    other.gameObject.GetComponent<TweenHelper>().speed = Random.Range(10000, 20000);
-    Debug.Log("Restarted.");
-  }
+	public void TriggerHandlerExit(Collider other, GameObject road)
+	{
+		if (GameObject.ReferenceEquals(locker, other.gameObject))
+		{
+			foreach (var item in roadGroup)
+			{
+				if (item.options.Contains(road))
+				{
+					//kimegy a kijáraton a lockoló autó
+					Debug.Log("kijáraton távozik ");
+					locker = null;
+				}
+			}
+		}
+	}
 
 
-}
+	}
