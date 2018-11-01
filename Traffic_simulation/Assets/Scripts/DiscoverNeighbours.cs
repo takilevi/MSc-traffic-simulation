@@ -275,4 +275,30 @@ public class DiscoverNeighbours : MonoBehaviour
 
 		this.gameObject.GetComponent<TweenHelper>().test = calculatedRoute.ToArray();
 	}
+
+  public List<GameObject> GetGameObjectsInCross(GameObject from)
+  {
+    List<GameObject> crossItems = new List<GameObject>();
+    int indexEntry = calculatedRoute.IndexOf(from);
+
+    Debug.Log("index of crossentry: " + indexEntry);
+    GameObject temp = calculatedRoute[indexEntry];
+    crossItems.Add(calculatedRoute[indexEntry]);
+
+    do
+    {
+      indexEntry++;
+      temp = calculatedRoute[indexEntry];
+      crossItems.Add(calculatedRoute[indexEntry]);
+      
+
+    } while (temp.tag != "CrossRoad");
+
+    Debug.Log("ezek az elemek az adott kereszteződésben :\n " + String.Join("",
+              new List<GameObject>(crossItems)
+              .ConvertAll(i => String.Concat(i.ToString(), i.transform.parent.ToString(), "\n"))
+              .ToArray()));
+
+    return crossItems;
+  }
 }
