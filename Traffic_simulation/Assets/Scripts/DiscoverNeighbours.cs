@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-[ExecuteInEditMode]
 public class DiscoverNeighbours : MonoBehaviour
 {
 
@@ -45,8 +44,8 @@ public class DiscoverNeighbours : MonoBehaviour
 		closedList = new Queue<AStarNode>();
 		aStarResult = new Queue<GameObject>();
 
-    //from = ElementTable.GetRandomRoadElement();
-		//to = ElementTable.GetRandomRoadElement();
+    from = ElementTable.GetRandomSource(this.gameObject);
+		to = ElementTable.GetRandomDestination();
 		
 		crossMetaObject = GameObject.FindObjectsOfType<CrossRoadMeta>();
 
@@ -268,10 +267,13 @@ public class DiscoverNeighbours : MonoBehaviour
 
 			} while (endNotReached && insideRoads);
 		}
-		Debug.Log("útvonal DISTINCT a ciklus után :\n " + String.Join("",
+
+    /*
+    Debug.Log("útvonal DISTINCT a ciklus után :\n " + String.Join("",
 							new List<GameObject>(calculatedRoute)
 							.ConvertAll(i => String.Concat(i.ToString(), i.transform.parent.ToString(), "\n"))
 							.ToArray()));
+     */
 
 		this.gameObject.GetComponent<TweenHelper>().test = calculatedRoute.ToArray();
 	}
@@ -281,7 +283,6 @@ public class DiscoverNeighbours : MonoBehaviour
     List<GameObject> crossItems = new List<GameObject>();
     int indexEntry = calculatedRoute.IndexOf(from);
 
-    Debug.Log("index of crossentry: " + indexEntry);
     GameObject temp = calculatedRoute[indexEntry];
     crossItems.Add(calculatedRoute[indexEntry]);
 
@@ -294,11 +295,12 @@ public class DiscoverNeighbours : MonoBehaviour
 
     } while (temp.tag != "CrossRoad");
 
+    /*
     Debug.Log("ezek az elemek az adott kereszteződésben :\n " + String.Join("",
               new List<GameObject>(crossItems)
               .ConvertAll(i => String.Concat(i.ToString(), i.transform.parent.ToString(), "\n"))
               .ToArray()));
-
+    */
     return crossItems;
   }
 }

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -34,8 +35,17 @@ public class CrossRoadMeta : MonoBehaviour
   // Update is called once per frame
   void Update()
   {
-   
+    if(this.gameObject.name== "CrossRoad_4_arm (2)")
+    {
+      foreach (var item in waitRow)
+      {
+        Debug.Log("waitRow:  Key (collider): " + item.Key.gameObject.name + "\tValue (car): " + item.Value.gameObject.name);
+      }
+      Debug.Log("-----------------------------------------------");
+    }
+    
   }
+
 
 
   public List<GameObject> GetOptions(GameObject from)
@@ -163,7 +173,7 @@ public class CrossRoadMeta : MonoBehaviour
 
     if (this.gameObject.name.Contains("Assymetric"))
     {
-      Debug.Log("assymetric");
+      //Debug.Log("assymetric");
       Vector3 rotatedVectorBy45 = Quaternion.Euler(0, 45, 0) * direction;
       forward = rotatedVectorBy45 * 7;
 
@@ -262,8 +272,10 @@ public class CrossRoadMeta : MonoBehaviour
     }
   }
 
-  public void TriggerHandler(Collider other, GameObject road)
+
+  public bool TriggerHandler(Collider other, GameObject road)
   {
+    bool lockSuccess = false;
     if (RoadIsEntry(road))
     {
       List<GameObject> crossItems = other.gameObject.GetComponent<DiscoverNeighbours>().GetGameObjectsInCross(road);
@@ -271,26 +283,30 @@ public class CrossRoadMeta : MonoBehaviour
 
       if (!isCrossElementsLocked)
       {
-        if(Mathf.Approximately(other.gameObject.GetComponent<TweenHelper>().speed,0.0f))
-        {
-          other.gameObject.GetComponent<TweenHelper>().speed = 10.0f;
-        }
         //lockolás
         foreach (var crossItem in crossItems)
         {
           crossLock[crossItem] = other.gameObject;
         }
+        if (Mathf.Approximately(other.gameObject.GetComponent<TweenHelper>().currentSpeed,0.0f))
+        {
+          other.gameObject.GetComponent<TweenHelper>().RestoreToInitialSpeed();
+        }
+        lockSuccess = true;
+        other.gameObject.GetComponent<CarController>().carInCross = true;
+
       }
 
       if (isCrossElementsLocked)
       {
-        other.gameObject.GetComponent<TweenHelper>().speed = 0.0f;
+        other.gameObject.GetComponent<TweenHelper>().SetCurrentSpeed(0.0f);
         if (!waitRow.ContainsKey(other))
         {
           waitRow.Add(other, road);
         }
       }
     }
+    return lockSuccess;
   }
 
   public bool CrossElementsLocked(List<GameObject> crossItems)
@@ -335,6 +351,10 @@ public class CrossRoadMeta : MonoBehaviour
           lockObj.Add(item);
         }
       }
+      if(lockObj.Count != 0)
+      {
+        other.gameObject.GetComponent<CarController>().carInCross = false;
+      }
       foreach (var item in lockObj)
       {
         crossLock[item] = null;
@@ -369,8 +389,8 @@ public class CrossRoadMeta : MonoBehaviour
     {
       foreach (var item in waitRow)
       {
-        TriggerHandler(item.Key, item.Value);
-        if(!Mathf.Approximately(item.Key.gameObject.GetComponent<TweenHelper>().speed,0.0f))
+        bool carCanGo = TriggerHandler(item.Key, item.Value);
+        if(carCanGo)
         {
           toRemoveList.Add(item.Key);
         }

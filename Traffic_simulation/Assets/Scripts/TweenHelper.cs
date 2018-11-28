@@ -11,6 +11,7 @@ public class TweenHelper : MonoBehaviour
   public Color mainPathColor;
 
   public float speed;
+  public float currentSpeed;
   private GameObject targetObject;
   private int pathIndex;
   private float reachDist = 1f;
@@ -20,17 +21,21 @@ public class TweenHelper : MonoBehaviour
   void Start()
   {
     targetObject = this.gameObject;
-		pathIndex = 1;
+    pathIndex = 1;
+    currentSpeed = speed;
 
-		if (test.Length > 0)
+    if (test != null && test.Length > 0)
     {
-
-      // targetObject.transform.position = test[0].position;
       targetObject.transform.position = test[0].transform.position;
 
       pathPointsCatMull = GetInterpolatedPath(testV3).ToArray();
-      //Debug.Log("hossz: " + pathPointsCatMull.Length);
       moving = true;
+      Vector3[] suppliedLine = new Vector3[test.Length];
+      for (int i = 0; i < test.Length; i++)
+      {
+        suppliedLine[i] = test[i].transform.position;
+      }
+      testV3 = suppliedLine;
     }
   }
 
@@ -44,50 +49,51 @@ public class TweenHelper : MonoBehaviour
 
       this.transform.LookAt(pathPointsCatMull[pathIndex]);
 
-      transform.position = Vector3.Lerp(transform.position, pathPointsCatMull[pathIndex], Time.deltaTime * speed);
+      transform.position = Vector3.Lerp(transform.position, pathPointsCatMull[pathIndex], Time.deltaTime * currentSpeed);
 
       if (dist <= reachDist)
       { pathIndex++; }
 
       if (pathIndex >= pathPointsCatMull.Length)
       {
-				//Debug.Log("arrive to destination, i hope you travel well, please recommend our system to your loved ones");
+        //Debug.Log("arrive to destination, i hope you travel well, please recommend our system to your loved ones");
         moving = false;
-				GameObject arriveTo = test[test.Length - 1];
-				this.GetComponent<TweenHelper>().test = new GameObject[0];
-				this.GetComponent<TweenHelper>().testV3 = new Vector3[0];
+        GameObject arriveTo = test[test.Length - 1];
+        this.GetComponent<TweenHelper>().test = new GameObject[0];
+        this.GetComponent<TweenHelper>().testV3 = new Vector3[0];
 
-				this.gameObject.GetComponent<DiscoverNeighbours>().calculatedRoute.Clear();
+        this.gameObject.GetComponent<DiscoverNeighbours>().calculatedRoute.Clear();
 
-				this.gameObject.GetComponent<DiscoverNeighbours>().openList.Clear();
-				this.gameObject.GetComponent<DiscoverNeighbours>().closedList.Clear();
-				this.gameObject.GetComponent<DiscoverNeighbours>().aStarResult.Clear();
+        this.gameObject.GetComponent<DiscoverNeighbours>().openList.Clear();
+        this.gameObject.GetComponent<DiscoverNeighbours>().closedList.Clear();
+        this.gameObject.GetComponent<DiscoverNeighbours>().aStarResult.Clear();
 
-				if (GameObject.ReferenceEquals(arriveTo, this.gameObject.GetComponent<DiscoverNeighbours>().to))
-				{
-					this.gameObject.GetComponent<DiscoverNeighbours>().FindShortestPath(this.gameObject.GetComponent<DiscoverNeighbours>().to, this.gameObject.GetComponent<DiscoverNeighbours>().from);
-					StartCoroutine(PathReCalculateWait());
-				}
-				else
-				{
-					this.gameObject.GetComponent<DiscoverNeighbours>().FindShortestPath(this.gameObject.GetComponent<DiscoverNeighbours>().from, this.gameObject.GetComponent<DiscoverNeighbours>().to);
-					StartCoroutine(PathReCalculateWait());
-				}
-				
+        if (GameObject.ReferenceEquals(arriveTo, this.gameObject.GetComponent<DiscoverNeighbours>().to))
+        {
+          this.gameObject.GetComponent<DiscoverNeighbours>().FindShortestPath(this.gameObject.GetComponent<DiscoverNeighbours>().to, this.gameObject.GetComponent<DiscoverNeighbours>().from);
+          StartCoroutine(PathReCalculateWait());
+        }
+        else
+        {
+          this.gameObject.GetComponent<DiscoverNeighbours>().FindShortestPath(this.gameObject.GetComponent<DiscoverNeighbours>().from, this.gameObject.GetComponent<DiscoverNeighbours>().to);
+          StartCoroutine(PathReCalculateWait());
+        }
 
-			}
+
+      }
     }
     else if (pathPointsCatMull == null || pathPointsCatMull.Length <= 0) { Start(); }
   }
 
-	IEnumerator PathReCalculateWait()
-	{
-		//Debug.Log("Waiting for filling...");
-		yield return new WaitUntil(() => test.Length > 0);
-		pathPointsCatMull = new Vector3[0];
-		//Debug.Log("Filled.");
-	}
-	private void OnDrawGizmos()
+  IEnumerator PathReCalculateWait()
+  {
+    yield return new WaitUntil(() => test.Length > 0);
+    pathPointsCatMull = new Vector3[0];
+  }
+
+  
+  /*
+  private void OnDrawGizmos()
   {
     if (test != null && test.Length > 0)
     {
@@ -101,13 +107,14 @@ public class TweenHelper : MonoBehaviour
     }
   }
 
+
   private static void DrawForwardPath(Vector3[] path, Color color)
   {
     Vector3[] vector3s = PathControlPointGenerator(PathSmoothingAtCurvePoint(path));
 
     //Line Draw:
     Vector3 previousPoint = Interp(vector3s, 0);
-    Gizmos.color = color;
+    Gizmos.color = new Color(UnityEngine.Random.value, UnityEngine.Random.value, UnityEngine.Random.value, 1.0f);
     int SmoothAmount = path.Length * 7;
     for (int i = 1; i <= SmoothAmount; i++)
     {
@@ -117,6 +124,8 @@ public class TweenHelper : MonoBehaviour
       previousPoint = currPt;
     }
   }
+  */
+  
 
   private List<Vector3> GetInterpolatedPath(Vector3[] path)
   {
@@ -124,14 +133,12 @@ public class TweenHelper : MonoBehaviour
     Vector3[] vector3s = PathControlPointGenerator(PathSmoothingAtCurvePoint(path));
 
     List<Vector3> pathPointsCatmull = new List<Vector3>();
-
     Vector3 previousPoint = Interp(vector3s, 0);
     int SmoothAmount = path.Length * 15;
     for (int i = 1; i <= SmoothAmount; i++)
     {
       float pm = (float)i / SmoothAmount;
       Vector3 currPt = Interp(vector3s, pm);
-
       pathPointsCatmull.Add(previousPoint);
       previousPoint = currPt;
     }
@@ -210,5 +217,15 @@ public class TweenHelper : MonoBehaviour
       + (-a + c) * u
       + 2f * b
     );
+  }
+
+  public void RestoreToInitialSpeed()
+  {
+    currentSpeed = speed;
+  }
+
+  public void SetCurrentSpeed(float newSpeed)
+  {
+    currentSpeed = newSpeed;
   }
 }

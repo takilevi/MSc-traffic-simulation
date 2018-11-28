@@ -22,11 +22,12 @@ public class ElementTable : MonoBehaviour
   }
   public static List<RoadAndPosition> roadToPosition;
   public static List<GameObject> allRoadElements;
+  public static Dictionary<GameObject,GameObject> sourceToCar = new Dictionary<GameObject, GameObject>();
 
   // Use this for initialization
   void Awake()
   {
-
+    sourceToCar = new Dictionary<GameObject, GameObject>();
     if (roadToPosition == null || roadToPosition.Count == 0)
     {
       Setup();
@@ -133,5 +134,26 @@ public class ElementTable : MonoBehaviour
       || roadToPosition == null || roadToPosition.Count == 0) { Setup(); }
 
     return allRoadElements[Random.Range(0, allRoadElements.Count)];
+  }
+  public static GameObject GetRandomSource(GameObject car)
+  {
+    GameObject source = null;
+    bool gotTheSource = false;
+    while (!gotTheSource)
+    {
+      source = GetRandomRoadElement();
+      if (!sourceToCar.ContainsKey(source) && !sourceToCar.ContainsKey(source.GetComponent<RoadElementModel>().nextElement))
+      {
+        sourceToCar.Add(source, car);
+        sourceToCar.Add(source.GetComponent<RoadElementModel>().nextElement, car);
+        gotTheSource = true;
+      }
+    }
+    return source;
+
+  }
+  public static GameObject GetRandomDestination()
+  {
+    return GetRandomRoadElement();
   }
 }

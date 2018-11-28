@@ -8,6 +8,7 @@ TagManager:
   - CrossRoad
   - RoadModel
   - CustomCamera
+  - Car
   layers:
   - Default
   - TransparentFX

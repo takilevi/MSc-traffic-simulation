@@ -100,23 +100,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!1 &1727631261171372
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 4211051148287484}
-  - component: {fileID: 20946616523775370}
-  - component: {fileID: 81672462816930916}
-  m_Layer: 0
-  m_Name: TAXI1 Camera
-  m_TagString: CustomCamera
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
 --- !u!1 &1790417866921960
 GameObject:
   m_ObjectHideFlags: 0
@@ -200,8 +183,8 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1316543000357988}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: -0.7071068, z: -0, w: 0.7071067}
+  m_LocalPosition: {x: 52.47, y: 0, z: -2.4999998}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4745328557574702}
@@ -211,23 +194,9 @@ Transform:
   - {fileID: 4114422133361504}
   - {fileID: 4276919857865608}
   - {fileID: 4984219900446064}
-  - {fileID: 4211051148287484}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!4 &4211051148287484
-Transform:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1727631261171372}
-  m_LocalRotation: {x: 0.42261827, y: 0, z: 0, w: 0.9063079}
-  m_LocalPosition: {x: 0, y: 20, z: -5}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 4182875202631122}
-  m_RootOrder: 7
-  m_LocalEulerAnglesHint: {x: 50, y: 0, z: 0}
 --- !u!4 &4276919857865608
 Transform:
   m_ObjectHideFlags: 1
@@ -293,46 +262,6 @@ Transform:
   m_Father: {fileID: 4182875202631122}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!20 &20946616523775370
-Camera:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1727631261171372}
-  m_Enabled: 1
-  serializedVersion: 2
-  m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
-  m_projectionMatrixMode: 1
-  m_SensorSize: {x: 36, y: 24}
-  m_LensShift: {x: 0, y: 0}
-  m_FocalLength: 50
-  m_NormalizedViewPortRect:
-    serializedVersion: 2
-    x: 0
-    y: 0
-    width: 1
-    height: 1
-  near clip plane: 0.3
-  far clip plane: 1000
-  field of view: 80
-  orthographic: 0
-  orthographic size: 5
-  m_Depth: 0
-  m_CullingMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_RenderingPath: -1
-  m_TargetTexture: {fileID: 0}
-  m_TargetDisplay: 0
-  m_TargetEye: 3
-  m_HDR: 1
-  m_AllowMSAA: 1
-  m_AllowDynamicResolution: 0
-  m_ForceIntoRT: 0
-  m_OcclusionCulling: 1
-  m_StereoConvergence: 10
-  m_StereoSeparation: 0.022
 --- !u!23 &23069871960596502
 MeshRenderer:
   m_ObjectHideFlags: 1
@@ -696,20 +625,13 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 2.1721282, y: 1, z: 5.78}
   m_Center: {x: 0, y: 0.5, z: -0.15}
---- !u!81 &81672462816930916
-AudioListener:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1727631261171372}
-  m_Enabled: 1
 --- !u!114 &114624450275595202
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1316543000357988}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c5cf5c06cbc72d349a84f0b4da4c30a3, type: 3}
   m_Name: 
@@ -735,7 +657,28 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  calculatedRoute: []
+  calculatedRoute:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   from: {fileID: 0}
   to: {fileID: 0}
 --- !u!114 &114790817868353064
@@ -749,7 +692,49 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a7ea9cd89755f245a69dfb50be2aff8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  test: []
-  testV3: []
+  test:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  testV3:
+  - {x: 52.47, y: 0, z: -2.4999998}
+  - {x: 47.47, y: 0, z: -2.4999998}
+  - {x: 42.47, y: 0, z: -2.4999998}
+  - {x: 37.47, y: 0, z: -2.4999998}
+  - {x: 32.47, y: 0, z: -2.4999998}
+  - {x: 27.470001, y: 0, z: -2.4999998}
+  - {x: 22.470001, y: 0, z: -2.4999998}
+  - {x: 17.5, y: 0, z: -2.4999998}
+  - {x: 12.5, y: 0, z: -2.4999998}
+  - {x: 7.5, y: 0, z: -2.5}
+  - {x: 2.5, y: 0, z: -2.5}
+  - {x: -1.25, y: 0, z: -3.75}
+  - {x: -2.5, y: 0, z: -7.5}
+  - {x: -2.5, y: 0, z: -12.5}
+  - {x: -2.5, y: 0, z: -17.519997}
+  - {x: -2.5, y: 0, z: -22.519997}
+  - {x: -2.5, y: 0, z: -27.519997}
+  - {x: -2.5, y: 0, z: -32.519997}
+  - {x: -2.5, y: 0, z: -37.52}
+  - {x: -2.5, y: 0, z: -42.519997}
+  - {x: -2.5, y: 0, z: -47.519997}
   mainPathColor: {r: 0.6320754, g: 0, b: 0.44350094, a: 1}
   speed: 6

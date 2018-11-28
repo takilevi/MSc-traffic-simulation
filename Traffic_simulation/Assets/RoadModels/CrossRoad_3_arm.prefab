@@ -1308,7 +1308,6 @@ MonoBehaviour:
   - {fileID: 1354363915564870}
   - {fileID: 1939674573240814}
   - {fileID: 1050411172273674}
-  locker: {fileID: 0}
 --- !u!114 &114885542434754734
 MonoBehaviour:
   m_ObjectHideFlags: 1
