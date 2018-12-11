@@ -31,8 +31,9 @@ public class DiscoverNeighbours : MonoBehaviour
 	public Queue<AStarNode> openList;
 	public Queue<AStarNode> closedList;
 	public Queue<GameObject> aStarResult;
+  public bool routeReady = false;
 
-	void Awake()
+  void Awake()
 	{
     ElementTable.Setup();
 
@@ -89,7 +90,9 @@ public class DiscoverNeighbours : MonoBehaviour
 			{
 				//Debug.Log("megvagyunk");
 				calculatedRoute.Add(nextElement);
-				return;
+        routeReady = true;
+        this.gameObject.GetComponent<TweenHelper>().test = calculatedRoute.ToArray();
+        return;
 			}
 			Component nextComp = nextElement.GetComponent<CrossRoadModel>();
 			if (nextComp != null)
@@ -275,7 +278,9 @@ public class DiscoverNeighbours : MonoBehaviour
 							.ToArray()));
      */
 
-		this.gameObject.GetComponent<TweenHelper>().test = calculatedRoute.ToArray();
+    routeReady = true;
+    this.gameObject.GetComponent<TweenHelper>().test = calculatedRoute.ToArray();
+    
 	}
 
   public List<GameObject> GetGameObjectsInCross(GameObject from)

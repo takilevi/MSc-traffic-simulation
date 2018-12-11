@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.Specialized;
+using System.Linq;
 using UnityEngine;
 
 public class CrossRoadMeta : MonoBehaviour
@@ -35,6 +37,7 @@ public class CrossRoadMeta : MonoBehaviour
   // Update is called once per frame
   void Update()
   {
+    /*
     if(this.gameObject.name== "CrossRoad_4_arm (2)")
     {
       foreach (var item in waitRow)
@@ -42,7 +45,15 @@ public class CrossRoadMeta : MonoBehaviour
         Debug.Log("waitRow:  Key (collider): " + item.Key.gameObject.name + "\tValue (car): " + item.Value.gameObject.name);
       }
       Debug.Log("-----------------------------------------------");
+
+      foreach (var item in crossLock)
+      {
+        if(item.Value != null)
+          Debug.Log("crossLock:  Key (cross): " + item.Key.gameObject.name + "\tValue (car): " + item.Value.gameObject.name);
+      }
+      Debug.Log("-----------------------------------------------");
     }
+    */
     
   }
 
@@ -291,6 +302,7 @@ public class CrossRoadMeta : MonoBehaviour
         if (Mathf.Approximately(other.gameObject.GetComponent<TweenHelper>().currentSpeed,0.0f))
         {
           other.gameObject.GetComponent<TweenHelper>().RestoreToInitialSpeed();
+          other.gameObject.GetComponent<CarController>().carInWaitRow = false;
         }
         lockSuccess = true;
         other.gameObject.GetComponent<CarController>().carInCross = true;
@@ -300,6 +312,7 @@ public class CrossRoadMeta : MonoBehaviour
       if (isCrossElementsLocked)
       {
         other.gameObject.GetComponent<TweenHelper>().SetCurrentSpeed(0.0f);
+        other.gameObject.GetComponent<CarController>().carInWaitRow = true;
         if (!waitRow.ContainsKey(other))
         {
           waitRow.Add(other, road);

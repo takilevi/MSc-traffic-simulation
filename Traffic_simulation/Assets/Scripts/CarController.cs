@@ -8,10 +8,12 @@ class CarController : MonoBehaviour
 {
   public GameObject safetyCar = null;
   public bool carInCross = false;
+  public bool carInWaitRow = false;
 
   private void Start()
   {
     carInCross = false;
+    carInWaitRow = false;
   }
 
   private void Update()
@@ -25,6 +27,11 @@ class CarController : MonoBehaviour
     if (safetyCar!=null && safetyCar.GetComponent<CarController>().carInCross)
     {
       safetyCar = null;
+      this.gameObject.GetComponent<TweenHelper>().RestoreToInitialSpeed();
+    }
+
+    if(!carInWaitRow && safetyCar == null && this.gameObject.GetComponent<TweenHelper>().currentSpeed != this.gameObject.GetComponent<TweenHelper>().speed)
+    {
       this.gameObject.GetComponent<TweenHelper>().RestoreToInitialSpeed();
     }
   }

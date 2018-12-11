@@ -7,15 +7,15 @@ public class TweenHelper : MonoBehaviour
 {
   public GameObject[] test;
   public Vector3[] testV3;
-  private Vector3[] pathPointsCatMull;
+  public Vector3[] pathPointsCatMull;
   public Color mainPathColor;
 
   public float speed;
   public float currentSpeed;
   private GameObject targetObject;
-  private int pathIndex;
-  private float reachDist = 1f;
-  private bool moving;
+  public int pathIndex;
+  public float reachDist = 1f;
+  public bool moving;
 
   // Use this for initialization
   void Start()
@@ -36,6 +36,10 @@ public class TweenHelper : MonoBehaviour
         suppliedLine[i] = test[i].transform.position;
       }
       testV3 = suppliedLine;
+    }
+    if ((test == null || test.Length == 0) && this.gameObject.GetComponent<DiscoverNeighbours>().routeReady)
+    {
+      test = this.gameObject.GetComponent<DiscoverNeighbours>().calculatedRoute.ToArray();
     }
   }
 
