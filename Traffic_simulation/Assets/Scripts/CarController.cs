@@ -18,7 +18,7 @@ class CarController : MonoBehaviour
 
   private void Update()
   {
-    if (safetyCar != null &&
+    if (safetyCar != null && !carInWaitRow &&
       !Mathf.Approximately(this.GetComponent<TweenHelper>().currentSpeed, safetyCar.GetComponent<TweenHelper>().currentSpeed) &&
       this.GetComponent<TweenHelper>().speed > safetyCar.GetComponent<TweenHelper>().currentSpeed)
     {
@@ -33,6 +33,10 @@ class CarController : MonoBehaviour
     if(!carInWaitRow && safetyCar == null && this.gameObject.GetComponent<TweenHelper>().currentSpeed != this.gameObject.GetComponent<TweenHelper>().speed)
     {
       this.gameObject.GetComponent<TweenHelper>().RestoreToInitialSpeed();
+    }
+    if(carInWaitRow && !Mathf.Approximately(this.gameObject.GetComponent<TweenHelper>().currentSpeed, 0.0f))
+    {
+      this.gameObject.GetComponent<TweenHelper>().SetCurrentSpeed(0.0f);
     }
   }
 
