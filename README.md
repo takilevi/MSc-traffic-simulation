@@ -40,13 +40,58 @@ so the crossing management will happen in this script, such as lockings, and han
 
 ---
 ## A* pathfinding algorithm
-[DiscoverNeighbours.cs](https://github.com/takilevi/MSc-traffic-simulation/blob/Msc-onlab-2/Traffic_simulation/Assets/Scripts/DiscoverNeighbours.cs) has almost all of the responsibilities from the pathfinding process.
+[DiscoverNeighbours.cs](https://github.com/takilevi/MSc-traffic-simulation/blob/Msc-onlab-2/Traffic_simulation/Assets/Scripts/DiscoverNeighbours.cs) handles almost all of the responsibilities from the pathfinding process.
 
 The **FindShortestPath** method creates the path, which has two parameters: _from_ and _to_ GameObjects.
 
-Here are some documentations about the steps of the A* here:
+Here are some documentations about the steps of the A* :
 
 * https://www.raywenderlich.com/3016-introduction-to-a-pathfinding
 * https://www.codeproject.com/Articles/1221034/Pathfinding-Algorithms-in-Csharp
 * https://en.wikipedia.org/wiki/A*_search_algorithm
+
+
+As I mentioned before the crossroad elements are the nodes of the graph, and the basic road elements are the edges between the nodes.
+##### The main idea
+The most important thing about my implementation is the idea that **every road element is accessible from a crossroad**.
+
+By that idea I can separate the pathfinding to 2 well defining groups:
+1. Starting road element and the End road element are on the same 'edge', so no crossroad/node interrupt the path, this is the easy way, no need to calculate anything just chaining the road elements.
+2. Starting road element and the End road element are not on the same edge, this means one or more crossroads/nodes interrupts the car's way from start to end.
+I will write about this scenario in the next chapter 
+
+### My implementation for A*
+
+**Init:** Need a car GameObject with the DiscoverNeighbours script on it. And the script needs a 'from' and a 'to' road element to start the calculation.
+And the crossroads will get their initial H and G values.
+
+**First steps:** The first step is to find the closest crossroad elements from the stance points. For the staring point this means the closest entry point of a crossroad,
+and for the endpoint this means the closest exit point of a crossroad.
+
+**Iteration:** The script now checks the upon crossroad entry point and compares it to the desired exit point, and calculates the heuristic values.
+
+**End of the algorithm:** The reached entry point of a crossroad is an element of the same crossroad as the desired exit point.
+
+At the end of the pathfinding, we have all the related crossroads, with the specified entry and exit points.
+Only the connection is missing, the connection itself is a chain of road elements, the script calculates it, between the crossroads, and voilá the calculated path is there.
+
+---
+## Crossroad locking
+
+CrossRoadModel and CrossRoadMeta together handle the collision control on the crossroad elements.
+
+If a car _arrives at an entry point_ it triggers an event. The car passes the direction where it want to go. Now two things can happen:
+1. The passed elements are free on the crossroad, so the car can go further, and also locks those crossroad elements.
+2. The elements (or at least one of the elements) are blocked, so the car has been added to a wait row.
+
+If one car _passes the crossroad_ it also triggers an onExit type event. The car unlocks all the previously blocked elements behind its path.
+
+
+---
+
+## Simulation
+
+The program can handle up to 200 cars, without performance issues. 
+However the city can barely handle over 40-50 cars, because of the main crossroads. At one point they block themselves to a deadlock.
+
 
