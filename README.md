@@ -52,7 +52,9 @@ Here are some documentations about the steps of the A* :
 
 
 As I mentioned before the crossroad elements are the nodes of the graph, and the basic road elements are the edges between the nodes.
-##### The main idea
+
+**The main idea**
+
 The most important thing about my implementation is the idea that **every road element is accessible from a crossroad**.
 
 By that idea I can separate the pathfinding to 2 well defining groups:
@@ -86,8 +88,204 @@ If a car _arrives at an entry point_ it triggers an event. The car passes the di
 
 If one car _passes the crossroad_ it also triggers an onExit type event. The car unlocks all the previously blocked elements behind its path.
 
+![crossroad collider profile](https://i.imgur.com/rvfEDek.png)
+![crossroad collider birdview](https://i.imgur.com/MLSeZhn.png)
 
----
+As you can see the collision controlled by BoxColliders on each entry and exit nodes.
+
+The BoxCollider is a component of the crosselement, so the _CrossRoadModel_ will handle its triggers, and the triggers delegated to the parent (_CrossRoadMeta_) which has methods called TriggerHandler and TriggerHandlerExit.
+
+```
+private void OnTriggerEnter(Collider other)
+{
+	this.GetComponentInParent<CrossRoadMeta>().TriggerHandler(other, this.gameObject);
+}
+private void OnTriggerExit(Collider other)
+{
+	this.GetComponentInParent<CrossRoadMeta>().TriggerHandlerExit(other, this.gameObject);
+}
+```
+
+### Enter trigger
+
+_TriggerHandler_ method handles the entry points. The implementation:
+
+```
+  public bool TriggerHandler(Collider other, GameObject road)
+  {
+    bool lockSuccess = false;
+    if (RoadIsEntry(road))
+    {
+      List<GameObject> crossItems = other.gameObject.GetComponent<DiscoverNeighbours>().GetGameObjectsInCross(road);
+      bool isCrossElementsLocked = CrossElementsLocked(crossItems);
+
+      if (!isCrossElementsLocked)
+      {
+        //locking
+        foreach (var crossItem in crossItems)
+        {
+          crossLock[crossItem] = other.gameObject;
+        }
+        if (Mathf.Approximately(other.gameObject.GetComponent<TweenHelper>().currentSpeed,0.0f))
+        {
+          other.gameObject.GetComponent<TweenHelper>().RestoreToInitialSpeed();
+          other.gameObject.GetComponent<CarController>().carInWaitRow = false;
+        }
+        lockSuccess = true;
+        other.gameObject.GetComponent<CarController>().carInCross = true;
+
+      }
+
+	  //at least one element of the crossroad chain is locked
+      if (isCrossElementsLocked)
+      {
+        other.gameObject.GetComponent<TweenHelper>().SetCurrentSpeed(0.0f);
+        other.gameObject.GetComponent<CarController>().carInWaitRow = true;
+        if (!waitRow.ContainsKey(other))
+        {
+          waitRow.Add(other, road);
+        }
+      }
+    }
+    return lockSuccess;
+  }
+```
+
+If the collided GameObject is an entry (_RoadIsEntry_ checks it), then the process starts.
+
+_crossItems_ variable contains the crossroad elements from the calculated route by A*.
+
+_isCrossElementsLocked_ is true, if all of the required elements of the collided car are free at the time.
+
+1. Cross is free
+	* Locks the required elements of the crossroad
+	* Restore the speed to the initial one, if the car stopped before due to wait
+
+2. Cross is locked
+	* Set car's speed to zero (aka stop the car)
+	* Put the car into the wait row
+	
+
+**crossLock** - _Key_: element of the cross  -  _Value_: locker car
+```
+public Dictionary<GameObject, GameObject> crossLock;
+```
+
+**waitRow** - _Key_: the collided entry point where the car waits  -  _Value_: waiting car
+```
+public Dictionary<Collider, GameObject> waitRow;
+```
+
+### Exit trigger
+
+_TriggerHandlerExit_ method handles the exit points. The implementation:
+
+```
+  public void TriggerHandlerExit(Collider other, GameObject road)
+  {
+    List<GameObject> lockObj = new List<GameObject>();
+    if (RoadIsExit(road))
+    {
+      //unlock where the 'other' is the locker
+      foreach (var item in crossLock.Keys)
+      {
+        if (GameObject.ReferenceEquals(other.gameObject, crossLock[item]))
+        {
+          lockObj.Add(item);
+        }
+      }
+      if(lockObj.Count != 0)
+      {
+        other.gameObject.GetComponent<CarController>().carInCross = false;
+      }
+      foreach (var item in lockObj)
+      {
+        crossLock[item] = null;
+      }
+    }
+
+    if (lockObj.Count > 0)
+    {
+      CheckWaitRow();
+    }
+  }
+```
+If the collided GameObject is an exit point (_RoadIsExit_), then the release process begins.
+
+Collect all of the locked objects by the car, and unlocks it, then call the _CheckWaitRow_ procedure.
+
+_CheckWaitRow_ below:
+
+```
+  private void CheckWaitRow()
+  {
+    List<Collider> toRemoveList = new List<Collider>();
+
+    if (waitRow.Count != 0)
+    {
+      foreach (var item in waitRow)
+      {
+        bool carCanGo = TriggerHandler(item.Key, item.Value);
+        if(carCanGo)
+        {
+          toRemoveList.Add(item.Key);
+        }
+      }
+    }
+
+    foreach (var item in toRemoveList)
+    {
+      waitRow.Remove(item);
+    }
+  }
+```
+If the waitRow is not empty, then iterate through the list, and check if there is a car (or multiple cars) which can go on.
+
+If the _carCanGo_ then it got removed from the waitRow, and place its locks as the _TriggerHandler_ does it.
+
+
+## Collision prevention
+
+As the program simulates a traffic, and the cars are fully autonome, I need to implement a prevention system.
+
+![car colliders](https://i.imgur.com/A6WSXiC.png)
+
+I use BoxColliders here too. The car GameObject has a component called [CarController.cs](https://github.com/takilevi/MSc-traffic-simulation/blob/Msc-onlab-2/Traffic_simulation/Assets/Scripts/CarController.cs) which handles the collisions.
+
+```
+  private void OnTriggerEnter(Collider other)
+  {
+
+    if (other.gameObject.tag.Equals("Car") && ThisIsSafetyCar(other.gameObject))
+    {
+      if (!other.gameObject.GetComponent<CarController>().carInCross)
+      {
+        this.gameObject.GetComponent<TweenHelper>().SetCurrentSpeed(other.gameObject.GetComponent<TweenHelper>().currentSpeed);
+        safetyCar = other.gameObject;
+      }
+    }
+  }
+
+  private void OnTriggerExit(Collider other)
+  {
+
+    if (other.gameObject.tag.Equals("Car") && GameObject.ReferenceEquals(safetyCar, other.gameObject))
+    {
+      safetyCar = null;
+      this.gameObject.GetComponent<TweenHelper>().RestoreToInitialSpeed();
+    }
+  }
+```
+
+If the car collides to another car, AND the _ThisIsSafetyCar_ returns with true. Then the _safetyCar_ variable setted to the collided object, and also sync their speeds.
+
+When the _safetyCar_ leaves the BoxCollider's scope, then the car restores its speed to the initial one (the max speed). 
+
+### Safety car
+
+See the image ahead, if the white-orange Mustang reaches the small orange car, then the _safetyCar_ variable of the Mustang will be the small car GameObject.
+
+The _ThisIsSafetyCar_ method checks that the collided car is ahead of the car - not behind of the car, and not a false detection, for example two cars' colliders can meet while both go through a crossroad.
 
 ## Simulation
 
