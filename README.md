@@ -292,4 +292,6 @@ The _ThisIsSafetyCar_ method checks that the collided car is ahead of the car - 
 The program can handle up to 200 cars, without performance issues. 
 However the city can barely handle over 40-50 cars, because of the main crossroads. At one point they block themselves to a deadlock.
 
+## Optimization
+
 
