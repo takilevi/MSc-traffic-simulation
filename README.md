@@ -294,4 +294,6 @@ However the city can barely handle over 40-50 cars, because of the main crossroa
 
 ## Optimization
 
+![static tag](https://i.imgur.com/W7s8q8z.png)
+![material gpu instancing](https://i.imgur.com/7LPP2kx.png)
 
